@@ -1,0 +1,4 @@
+﻿* text=auto eol=lf
+
+# Windows batch files
+*.bat text eol=crlf

@@ -1,0 +1,11 @@
+﻿# Windows
+Thumbs.db
+Desktop.ini
+
+# Editors / temporary files
+.vscode/
+.idea/
+.vs/
+*.tmp
+*.bak
+*~

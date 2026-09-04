@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>Projects | Life in Your 50s</title>
+  <meta name="description" content="Software, automation, cybersecurity, infrastructure, and local AI projects built by Robert Pelot.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+  
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+  <main id="main">
+<section class="page-hero"><div class="breadcrumb"><a href="/index.html">Home</a><span>/</span><span>Projects</span></div><p class="eyebrow">The workbench</p><h1>I learn by <span class="accent">building systems</span> that solve real problems.</h1><p class="lead">Some started as coursework. Some started because something around the house annoyed me. The interesting part is what happens after the first version works.</p></section>
+
+<section class="section">
+  <div class="project-case-grid">
+    <article id="collectorvision" class="project-case project-case-featured">
+      <img src="/assets/images/lab/collectorvision-collection.webp" alt="CollectorVision collection interface with photographed Hot Wheels vehicles" loading="lazy">
+      <div class="project-case-body">
+        <p class="project-meta">Featured build // active</p>
+        <h2>CollectorVision</h2>
+        <p>A custom collection-management and image-recognition workflow built around a real Hot Wheels collection. It combines catalog data, multiple vehicle images, OCR, image processing, review workflows, image fingerprints, and a SQLite-backed application.</p>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">SQLite</span><span class="tag">OCR</span><span class="tag">Image processing</span><span class="tag">Linux</span><span class="tag">Self-hosted</span></div>
+        <p class="project-outcome"><strong>Why it matters:</strong> it turns imperfect photos and incomplete data into a maintainable workflow rather than a one-off OCR demo.</p>
+      </div>
+    </article>
+
+    <article id="llm" class="project-case">
+      <img src="/assets/images/lab/local-llm.webp" alt="Cropped self-hosted local LLM chat interface" loading="lazy">
+      <div class="project-case-body">
+        <p class="project-meta">Local AI // infrastructure</p>
+        <h2>Self-hosted LLM & knowledge tooling</h2>
+        <p>A local language-model environment for private inference, programming assistance, persistent documentation, and automated knowledge generation for the homelab.</p>
+        <div class="tag-row"><span class="tag">llama.cpp</span><span class="tag">Qwen</span><span class="tag">Linux</span><span class="tag">Python</span><span class="tag">REST APIs</span></div>
+        <p class="project-outcome"><strong>Current direction:</strong> turning machine and application evidence into useful “Bible” documentation instead of relying on memory and scattered notes.</p>
+      </div>
+    </article>
+
+    <article id="forensics" class="project-case">
+      <img src="/assets/images/lab/forensics-lab.webp" alt="Digital forensics LabHost desktop with VirtualBox virtual machines" loading="lazy">
+      <div class="project-case-body">
+        <p class="project-meta">Cybersecurity // coursework</p>
+        <h2>Digital Forensics LabHost</h2>
+        <p>An Ubuntu-based lab VM configured for nested virtualization, VirtualBox, Tsurugi Linux, forensic images, and hands-on investigation exercises.</p>
+        <div class="tag-row"><span class="tag">Ubuntu</span><span class="tag">KVM</span><span class="tag">VirtualBox</span><span class="tag">Tsurugi</span></div>
+        <p class="project-outcome"><strong>What it demonstrates:</strong> virtualization troubleshooting, guest configuration, lab isolation, and forensic-workstation preparation.</p>
+      </div>
+    </article>
+
+    <article class="project-case">
+      <img src="/assets/images/lab/grafana-metrics.webp" alt="Sanitized Grafana CPU and memory metrics" loading="lazy">
+      <div class="project-case-body">
+        <p class="project-meta">Operations // self-hosting</p>
+        <h2>Monitoring & service dashboards</h2>
+        <p>Prometheus, Grafana, pve-exporter, and custom homepage dashboards give the lab a usable operational view instead of a pile of browser bookmarks.</p>
+        <div class="tag-row"><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Metrics</span><span class="tag">YAML</span></div>
+        <p class="project-outcome"><strong>What it demonstrates:</strong> systems become easier to trust when you can see health, performance, and failure modes.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="grid grid-2">
+    <article id="automation" class="card project-card"><p class="project-meta">Automation // daily tools</p><div class="card-icon">PS</div><h3>PowerShell, Python & ADB automation</h3><p>Small tools that remove repetitive work: SSH quick-launch flows, Windows automation, device control, scripted testing, and custom utilities built because clicking the same thing forty times gets old.</p><div class="tag-row"><span class="tag">PowerShell</span><span class="tag">Python</span><span class="tag">ADB</span><span class="tag">Windows</span><span class="tag">Linux</span></div><p class="project-outcome"><strong>What it demonstrates:</strong> practical automation starts with observing a workflow closely enough to know what should—and should not—be automated.</p></article>
+    <article class="card project-card"><p class="project-meta">Infrastructure // access</p><div class="card-icon">SSH</div><h3>One-click homelab access</h3><p>A custom launch workflow connects homepage service cards to terminal sessions and the right SSH identities, reducing friction when administering the lab.</p><div class="tag-row"><span class="tag">SSH</span><span class="tag">PowerShell</span><span class="tag">Linux</span><span class="tag">Web dashboard</span></div><p class="project-outcome"><strong>What it demonstrates:</strong> administration tooling can be simple, personal, and still thoughtfully designed.</p></article>
+  </div>
+</section>
+
+<section class="section"><div class="content-panel"><p class="section-kicker">A portfolio rule</p><h2>Show the work, not just the technology names.</h2><p>The project pages are becoming case studies: screenshots, architecture, design decisions, problems encountered, and what changed between versions. That is much more useful than a wall of skill badges.</p></div></section>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>

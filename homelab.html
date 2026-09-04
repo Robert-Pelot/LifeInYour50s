@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>Homelab & Technical Environment | Life in Your 50s</title>
+  <meta name="description" content="Explore Robert Pelot’s physical lab, Proxmox infrastructure, primary workstation, storage, networking, monitoring, cybersecurity labs, Raspberry Pi, and self-hosted projects.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="homelab">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+  
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+  <main id="main">
+
+<section class="page-hero lab-page-hero">
+  <div class="breadcrumb"><a href="/index.html">Home</a><span>/</span><span>Homelab</span></div>
+  <p class="eyebrow">The physical and virtual environment behind the projects.</p>
+  <h1>Not one server. <span class="accent">A working technical ecosystem.</span></h1>
+  <p class="lead">Proxmox is the core server platform, but the lab is bigger than Proxmox: a multi-monitor primary workstation, laptop, mini test PC, Raspberry Pi, personal network edge, storage, monitoring, IoT experiments, and purpose-built virtual labs all work together.</p>
+</section>
+
+<section class="section lab-photo-intro">
+  <figure class="lab-hero-photo">
+    <img src="/assets/images/lab/lab-room.jpg" alt="Wide view of Robert Pelot's home technical lab with multiple displays, laptop, workstations, towers, and test equipment" loading="eager">
+    <figcaption>
+      <span>THE ACTUAL LAB</span>
+      <strong>This is where the diagrams turn into cables, machines, mistakes, fixes, and working systems.</strong>
+    </figcaption>
+  </figure>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div><p class="section-kicker">Physical systems</p><h2>Different machines. Different jobs.</h2></div>
+    <p>The point is not to make every device powerful. It is to have the right place to develop, test, break, isolate, monitor, and learn.</p>
+  </div>
+
+  <div class="system-showcase">
+    <article class="system-card system-card-large">
+      <img src="/assets/images/lab/primary-workstation.jpg" alt="Primary Windows workstation tower beneath the lab desk" loading="lazy">
+      <div class="system-card-body">
+        <p class="system-label">Primary workstation // operations console</p>
+        <h3>Ryzen 5 7600 + RTX 3060 + 64 GB DDR5</h3>
+        <p>My daily development and administration system: Windows, coding, remote management, school work, device control, troubleshooting, and the multi-display console I use to operate the rest of the lab.</p>
+        <div class="spec-row"><span>6C / 12T Ryzen 5 7600</span><span>RTX 3060 8 GB</span><span>64 GB DDR5-4800</span><span>800 W PSU</span></div>
+        <div class="spec-row"><span>2 × Dell S2721HGF 144 Hz</span><span>LG QHD display</span><span>Large LG display / optional 4th screen</span></div>
+      </div>
+    </article>
+
+    <article class="system-card">
+      <img src="/assets/images/lab/proxmox-tower.jpg" alt="Open Proxmox server tower showing motherboard, CPU cooler, Intel Arc GPU, storage bays, and power supply" loading="lazy">
+      <div class="system-card-body">
+        <p class="system-label">Core virtualization host</p>
+        <h3>Proxmox PVE1</h3>
+        <p>Xeon E5-2690 v4, 14 cores / 28 threads, NVMe, multiple 16 TB disks, Intel Arc B570, and a C612 motherboard with <strong>4 × 2.5 GbE Intel I226</strong> interfaces.</p>
+      </div>
+    </article>
+
+    <article class="system-card">
+      <img src="/assets/images/lab/mini-test-pc.jpg" alt="Compact AZW MINI S test computer mounted beneath the lab work surface" loading="lazy">
+      <div class="system-card-body">
+        <p class="system-label">Disposable / lightweight testing</p>
+        <h3>AZW MINI S</h3>
+        <p>Intel Celeron N5095, 8 GB RAM, 256 GB SATA SSD, Windows 10 Pro. A small box for experiments and software trials that do not need the main workstation.</p>
+      </div>
+    </article>
+
+    <article class="system-card">
+      <img src="/assets/images/lab/raspberry-pi.jpg" alt="Raspberry Pi 4 connected by Ethernet and USB in the lab" loading="lazy">
+      <div class="system-card-body">
+        <p class="system-label">Edge / IoT experimentation</p>
+        <h3>Raspberry Pi 4 Model B</h3>
+        <p>8 GB RAM, 4-core Cortex-A72, 128 GB-class microSD, 64-bit Raspbian. Used for edge, security, electronics, and sensor experimentation.</p>
+      </div>
+    </article>
+
+    <article class="system-card text-system-card">
+      <div class="system-card-body">
+        <p class="system-label">Portable lab system</p>
+        <h3>Dell G15 5511</h3>
+        <p>Core i7-11800H, 16 GB RAM, RTX 3050 Laptop GPU 4 GB, Samsung 512 GB NVMe, Wi-Fi 6, Gigabit Ethernet, and Windows 10 Home.</p>
+        <div class="spec-row"><span>Portable development</span><span>Course labs</span><span>Remote administration</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div><p class="section-kicker">Network edge & console</p><h2>From fiber to the workbench.</h2></div>
+    <p>The ISP terminates the fiber. I choose the router, manage the local environment, and use a hardware KVM to move between systems without duplicating displays and peripherals.</p>
+  </div>
+
+  <div class="network-photo-grid">
+    <figure class="photo-card">
+      <img src="/assets/images/lab/network-edge.jpg" alt="Linksys EA9500 personal router with the ISP fiber optical network terminal mounted above it, beside electronics breadboards" loading="lazy">
+      <figcaption><strong>Linksys EA9500 + ISP fiber ONT</strong><span>The fiber ONT hands off the connection; my own router handles the local network. The same bench is also used for breadboard and MQTT sensor experiments.</span></figcaption>
+    </figure>
+    <figure class="photo-card">
+      <img src="/assets/images/lab/kvm-switch.jpg" alt="Four-device dual-monitor 4K HDMI USB 3 KVM switch mounted beneath the desk" loading="lazy">
+      <figcaption><strong>4-device, dual-monitor KVM</strong><span>A 4K HDMI / USB 3 hardware KVM lets multiple lab machines share keyboard, mouse, and two displays.</span></figcaption>
+    </figure>
+  </div>
+
+  <div class="network-flow" aria-label="Simplified public network architecture">
+    <div class="flow-node"><small>Provider</small><strong>Fiber service</strong></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><small>Demarcation</small><strong>Fiber ONT</strong></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node flow-node-accent"><small>My network edge</small><strong>Linksys EA9500</strong></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><small>Lab network</small><strong>Compute • storage • IoT</strong></div>
+  </div>
+  <div class="public-note"><strong>Public architecture only:</strong> internal IP addresses, MAC addresses, SSH identities, VPN endpoints, and credentials are intentionally excluded.</div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div><p class="section-kicker">Virtualization core</p><h2>Proxmox is the center—<em>not</em> the whole lab.</h2></div>
+    <p>Hosted systems provide storage, monitoring, DNS, reverse proxying, knowledge tools, development environments, course labs, local AI, and self-hosted services.</p>
+  </div>
+
+  <div class="screen-feature">
+    <img src="/assets/images/lab/proxmox-summary.webp" alt="Sanitized Proxmox host summary showing CPU, memory, disk, and host utilization" loading="lazy">
+    <div>
+      <p class="section-kicker">Live host view</p>
+      <h3>Real infrastructure, not a résumé diagram.</h3>
+      <p>The public screenshot is deliberately cropped to show system health without exposing account names or the full internal workload list.</p>
+      <div class="tech-band">
+        <span class="tech-pill">Proxmox VE</span><span class="tech-pill">LXC</span><span class="tech-pill">Virtual machines</span><span class="tech-pill">Nested virtualization</span><span class="tech-pill">Linux administration</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div><p class="section-kicker">Representative workloads</p><h2>Services with a reason to exist.</h2></div>
+    <p>There are 17 hosted workloads in the current environment. This public inventory highlights the parts that best demonstrate the architecture and the work behind it.</p>
+  </div>
+  <div class="filter-row" role="group" aria-label="Filter homelab workloads">
+    <button class="filter active" data-filter="all">All</button>
+    <button class="filter" data-filter="infra">Infrastructure</button>
+    <button class="filter" data-filter="network">Network</button>
+    <button class="filter" data-filter="observe">Monitoring</button>
+    <button class="filter" data-filter="lab">Labs & builds</button>
+  </div>
+  <div class="workload-grid">
+    <article class="workload" data-category="infra"><div class="workload-top"><h3>TrueNAS</h3><span class="kind">VM</span></div><p>Network-attached storage supporting project data and self-hosted services.</p><footer>Storage • SMB/NFS</footer></article>
+    <article class="workload" data-category="infra"><div class="workload-top"><h3>Homepage</h3><span class="kind">LXC</span></div><p>Self-hosted operational landing page and service launcher.</p><footer>Dashboard • administration</footer></article>
+    <article class="workload" data-category="network"><div class="workload-top"><h3>Nginx Proxy Manager</h3><span class="kind">LXC</span></div><p>Reverse proxy management for cleaner internal service access.</p><footer>Proxy • web services</footer></article>
+    <article class="workload" data-category="network"><div class="workload-top"><h3>Pi-hole</h3><span class="kind">LXC</span></div><p>Network-level DNS filtering and local name-resolution support.</p><footer>DNS • network</footer></article>
+    <article class="workload" data-category="observe"><div class="workload-top"><h3>Prometheus</h3><span class="kind">LXC</span></div><p>Metrics collection and service-health monitoring.</p><footer>Metrics • monitoring</footer></article>
+    <article class="workload" data-category="observe"><div class="workload-top"><h3>Grafana</h3><span class="kind">LXC</span></div><p>Dashboards and visualization over host and service metrics.</p><footer>Dashboards • observability</footer></article>
+    <article class="workload" data-category="lab"><div class="workload-top"><h3>CollectorVision</h3><span class="kind">LXC</span></div><p>Custom collection-management, image-processing, and OCR application.</p><footer>Python • SQLite • OCR</footer></article>
+    <article class="workload" data-category="lab"><div class="workload-top"><h3>CSCI434 LabHost</h3><span class="kind">VM</span></div><p>Ubuntu host for nested virtualization and digital-forensics coursework.</p><footer>Ubuntu • VirtualBox • forensics</footer></article>
+    <article class="workload" data-category="lab"><div class="workload-top"><h3>Local LLM</h3><span class="kind">LXC</span></div><p>Private local language-model inference and documentation tooling.</p><footer>llama.cpp • local AI</footer></article>
+    <article class="workload" data-category="lab"><div class="workload-top"><h3>Wiki</h3><span class="kind">LXC</span></div><p>Self-hosted knowledge and documentation service.</p><footer>Documentation • knowledge</footer></article>
+    <article class="workload" data-category="infra"><div class="workload-top"><h3>Media services</h3><span class="kind">Mixed</span></div><p>Isolated self-hosted media workloads used to practice storage, service management, routing, and automation.</p><footer>Self-hosting • operations</footer></article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div><p class="section-kicker">What it looks like in use</p><h2>The software side of the lab.</h2></div>
+    <p>Selected screenshots are cropped or sanitized where necessary. The goal is to show the systems, not publish a map of the private network.</p>
+  </div>
+  <div class="screen-gallery">
+    <figure class="screen-card screen-card-wide"><img src="/assets/images/lab/truenas-dashboard.webp" alt="TrueNAS dashboard showing storage system information and memory utilization" loading="lazy"><figcaption><strong>TrueNAS</strong><span>Storage and data services.</span></figcaption></figure>
+    <figure class="screen-card"><img src="/assets/images/lab/grafana-metrics.webp" alt="Cropped Grafana dashboard showing CPU and memory monitoring metrics" loading="lazy"><figcaption><strong>Grafana</strong><span>Host metrics and operational visibility.</span></figcaption></figure>
+    <figure class="screen-card"><img src="/assets/images/lab/pihole-dashboard.webp" alt="Pi-hole dashboard showing DNS query and blocking statistics" loading="lazy"><figcaption><strong>Pi-hole</strong><span>DNS-level filtering and query visibility.</span></figcaption></figure>
+    <figure class="screen-card screen-card-wide"><img src="/assets/images/lab/forensics-lab.webp" alt="CSCI 434 Ubuntu lab desktop with VirtualBox and forensic virtual machines" loading="lazy"><figcaption><strong>Digital Forensics LabHost</strong><span>Nested virtualization for hands-on coursework.</span></figcaption></figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div><p class="section-kicker">Beyond infrastructure</p><h2>The lab exists to build things.</h2></div>
+    <p>Infrastructure becomes much more interesting when it is supporting software, local AI, school labs, monitoring, and experiments that evolve over time.</p>
+  </div>
+  <div class="screen-gallery project-gallery">
+    <figure class="screen-card screen-card-wide"><img src="/assets/images/lab/collectorvision-collection.webp" alt="CollectorVision collection interface displaying photographed Hot Wheels vehicles" loading="lazy"><figcaption><strong>CollectorVision</strong><span>A real collection turned into a custom software and computer-vision project.</span></figcaption></figure>
+    <figure class="screen-card"><img src="/assets/images/lab/collectorvision-command.webp" alt="CollectorVision command center showing recognition indexes and image fingerprint tools" loading="lazy"><figcaption><strong>Recognition workflow</strong><span>Image fingerprints, queues, and review tooling.</span></figcaption></figure>
+    <figure class="screen-card"><img src="/assets/images/lab/local-llm.webp" alt="Cropped local LLM chat interface showing a self-hosted model response" loading="lazy"><figcaption><strong>Local LLM</strong><span>Private inference and technical-assistant experimentation.</span></figcaption></figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="grid grid-2">
+    <div class="content-panel">
+      <p class="section-kicker">IoT & edge</p>
+      <h2>The network does not stop at computers.</h2>
+      <p>The environment also includes cameras, a thermostat, smart switches, and small MQTT experiments such as temperature, humidity, and weather-related sensor projects. The Raspberry Pi and breadboard work give me a place to test the edge between software, networks, and physical devices.</p>
+    </div>
+    <div class="content-panel">
+      <p class="section-kicker">Next expansion</p>
+      <h2>Cisco lab gear is waiting in the wings.</h2>
+      <p>Four Cisco switches are on hand for future integration, and I am looking for suitable Cisco routers to build a more deliberate routing and switching lab that ties into the existing environment rather than living as an isolated classroom exercise.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="content-panel">
+    <p class="section-kicker">What this environment demonstrates</p>
+    <h2>Not “I know Linux.” I can show what I do with it.</h2>
+    <div class="tech-band">
+      <span class="tech-pill">Proxmox VE</span><span class="tech-pill">Linux administration</span><span class="tech-pill">Windows administration</span><span class="tech-pill">Virtual machines</span><span class="tech-pill">LXC</span><span class="tech-pill">TrueNAS</span><span class="tech-pill">DNS</span><span class="tech-pill">Reverse proxying</span><span class="tech-pill">Prometheus</span><span class="tech-pill">Grafana</span><span class="tech-pill">PowerShell</span><span class="tech-pill">Python</span><span class="tech-pill">Networking</span><span class="tech-pill">Local AI</span><span class="tech-pill">IoT / MQTT</span><span class="tech-pill">Digital forensics</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
