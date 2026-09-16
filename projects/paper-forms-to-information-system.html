@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>From Paper Forms to an Information System | Life in Your 50s</title>
+  <meta name="description" content="A career case study about replacing a handwritten production and maintenance workflow with a database-backed information system designed around real users, real historical data, and real operational needs.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/projects.html">Projects</a><span>/</span><span>Career case study</span></div>
+  <div class="article-label">Operations • Database • Process Improvement</div>
+  <h1>From Paper Forms to an Information System</h1>
+  <div class="article-meta">Career case study &nbsp;•&nbsp; Robert Pelot</div>
+
+  <div class="article-visual">
+    <div class="metaphor"><b>PAPER → STRUCTURE → INSIGHT</b><p>The database mattered, but understanding the existing workflow mattered first.</p></div>
+  </div>
+
+  <div class="article-body">
+    <p>Long before I was studying Information Systems formally, I had already run into the kind of problem the field is built around.</p>
+
+    <p>At one point in my industrial career, important production, maintenance, and personnel information was being recorded by hand. The process worked because experienced people knew how to make it work, but it also carried the usual weaknesses of a paper system: repeated calculations, inconsistent entries, difficult comparisons, and information that was much harder to analyze than it needed to be.</p>
+
+    <p>I designed and implemented a database program to replace that workflow.</p>
+
+    <p>The interesting part, looking back, is that the project was never really about the database alone. It was about understanding an existing process well enough to replace it without losing what already worked.</p>
+
+    <h3>The Problem Wasn't “We Need a Database”</h3>
+    <p>The real problem was that useful operational information existed, but the way it was being captured made the information harder to trust and harder to use.</p>
+
+    <p>Production totals and averages depended on manual calculations. Maintenance information lived beside production records but was not easy to compare with them. Historical records could be reviewed, but looking for patterns meant physically working through paper rather than querying structured data.</p>
+
+    <p>So the goal was not simply to digitize a form. The goal was to reduce routine error, preserve the information people already depended on, and make that information more useful once it had been collected.</p>
+
+    <h3>Start by Understanding the Old System</h3>
+    <p>Before building the replacement, I gathered roughly a year of handwritten records and worked through them.</p>
+
+    <p>That was tedious, but it forced me to understand what the records actually contained, which fields mattered, how people used the information, and what relationships existed between production, equipment, maintenance, and personnel data.</p>
+
+    <p>It also taught me something I still believe: an old system can be inefficient and still contain a great deal of accumulated knowledge.</p>
+
+    <p>If I had ignored the paper process and simply built what I thought people should use, I could easily have thrown away details that mattered to the people doing the work every day.</p>
+
+    <h3>Make the New System Feel Familiar</h3>
+    <p>One of the most deliberate design decisions was to make the electronic forms resemble the paper forms the operators already knew.</p>
+
+    <p>That was not because the paper layout was technologically sophisticated. It was because familiarity lowers the cost of change.</p>
+
+    <p>The operators did not need to learn an entirely new mental model just because the information was now being stored in a database. They could recognize the same information in roughly the same places while the system quietly handled calculations and structured storage behind the scenes.</p>
+
+    <p>Today I would describe that as designing for user adoption. At the time, it simply seemed like the practical thing to do.</p>
+
+    <h3>Test It with Real Historical Data</h3>
+    <p>The most time-consuming part of the project was entering the previous year's production records into the new system.</p>
+
+    <p>At times it felt like busywork. In reality, it became one of the strongest parts of the test process.</p>
+
+    <p>I already knew what the historical records said. That meant I could use them as a baseline and work backward: enter real operating data, run the new calculations and reports, and verify that the system reproduced results that had already been established.</p>
+
+    <p>Instead of testing only with a handful of clean sample records, I was testing against the kind of data the application would actually have to handle.</p>
+
+    <h3>Design Against Predictable Human Error</h3>
+    <p>A database does not eliminate human error simply because the information is stored electronically.</p>
+
+    <p>Users can still mistype values, misunderstand fields, skip information, or enter something in the wrong place. Part of the design effort therefore went into making common mistakes harder to make and moving routine calculations away from the user whenever the system could perform them consistently.</p>
+
+    <p>That shifted the workflow from “enter the numbers and then do the math” toward “enter the operational facts and let the system handle the repeatable calculation.”</p>
+
+    <p>The result was not a system that made mistakes impossible. It was a system that reduced several categories of avoidable mistake by design.</p>
+
+    <h3>Let the People Using It Change It</h3>
+    <p>I built most of the system myself, but I did not treat myself as the only useful tester.</p>
+
+    <p>Other supervisors worked through the interface and told me where navigation was confusing or where the workflow did not feel natural. When multiple users struggled with something, I treated that as a design problem rather than a user problem.</p>
+
+    <p>That feedback improved the application and also made the people who would eventually depend on it part of the transition.</p>
+
+    <h3>Structured Data Changed the Questions We Could Ask</h3>
+    <p>The biggest benefit appeared after the system was already doing its basic job.</p>
+
+    <p>Once the information lived in one structured system, it became much easier to compare things that had previously been viewed separately. Production could be considered alongside staffing levels. Output could be compared with maintenance downtime. Trends over time could be reviewed without manually rebuilding the history every time someone had a question.</p>
+
+    <p>The database did more than replace paper. It changed the information from something that could be recorded into something that could be examined.</p>
+
+    <h3>What I Recognize in the Project Now</h3>
+    <p>At the time, I did not describe the work using terms such as requirements analysis, data modeling, usability, validation, migration, acceptance testing, or change management.</p>
+
+    <p>I was simply trying to solve an operational problem.</p>
+
+    <p>Looking back after studying Information Systems, I can see those ideas throughout the project. I analyzed the existing workflow before designing the replacement. I migrated historical data. I tested the new system against known results. I reduced opportunities for routine input and calculation errors. I involved users in the design. And I discovered that structured data creates possibilities that paper records hide.</p>
+
+    <p><strong>That is one of the reasons my earlier career still matters to the work I am doing now.</strong></p>
+
+    <p>The technology has changed, and my vocabulary has improved, but the basic habit is the same: understand the real process, find the friction, build something useful, test it against reality, and keep improving it with the people who actually have to use it.</p>
+
+    <p><em>Employer and personnel details are intentionally omitted. This case study focuses on the system-design and process-improvement lessons from the project.</em></p>
+
+    <div class="article-back"><a href="/projects.html">← Back to projects</a></div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
