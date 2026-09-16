@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>What I Learned from a Health Informatics Expert | Life in Your 50s</title>
+  <meta name="description" content="What a conversation with a health informatics expert taught me about data quality, healthcare analytics, AI, security, and knowing what not to build.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="writing">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/writing.html">Writing</a><span>/</span><span>Essay</span></div>
+  <div class="article-label">Health Informatics • Data • AI</div>
+  <h1>What I Learned from a Health Informatics Expert</h1>
+  <div class="article-meta">By Robert Pelot &nbsp;•&nbsp; <time datetime="2026-09-16">September 16, 2026</time></div>
+
+  <div class="article-visual">
+    <div class="metaphor"><b>CLEAN → TRUST → ANALYZE</b><p>Before asking what the data can tell us, we first need to know whether we can trust the data enough to ask the question.</p></div>
+  </div>
+
+  <div class="article-body">
+    <p>One of the more useful things I have learned since going back to school is that a good idea can look very different once you talk to someone who actually works in the field.</p>
+
+    <p>As part of my Information Systems capstone, I interviewed a faculty expert in health informatics and healthcare data analytics. I went into the conversation with an idea already forming: a <strong>Health Data Readiness Workbench</strong>, a tool that could help someone look at a healthcare dataset and determine whether it was actually ready to be analyzed.</p>
+
+    <p>I was looking for feedback on the idea.</p>
+    <p><strong>What I got was a much better understanding of the problem.</strong></p>
+
+    <h3>The Analysis Is Often the Easy Part</h3>
+    <p>One comment from our conversation stuck with me more than anything else: analysts can sometimes spend more time cleaning data than actually analyzing it.</p>
+
+    <p>That sounds almost backwards.</p>
+
+    <p>When people talk about data analytics, the interesting part is usually the end result—the dashboard, the graph, the prediction, or the answer to some complicated question. Very little attention is given to everything that has to happen before any of that is possible.</p>
+
+    <p>A dataset can have missing values, impossible dates, duplicate records, inconsistent formatting, or values that simply do not make sense. And those are not necessarily minor inconveniences.</p>
+
+    <p>We talked about what happens when important variables are missing from a predictive model. A dataset can begin with an enormous number of records and then lose a surprisingly large portion of them because incomplete rows can no longer be used. In other words, a million rows do not automatically mean a million usable observations.</p>
+
+    <p>That reinforced something I had already been thinking about while designing my project: <strong>before asking what the data can tell us, we first need to know whether we can trust the data enough to ask the question.</strong></p>
+
+    <h3>Real Data Is Messier Than a Classroom Dataset</h3>
+    <p>Another part of the conversation changed how I thought about testing my project.</p>
+
+    <p>I had already found several possible sources of healthcare data, including synthetic and public-use datasets. During the interview, I was pointed toward additional healthcare datasets that could be useful for development and testing.</p>
+
+    <p>But there was an interesting problem: public and synthetic datasets are often prepared specifically so people can use them. In other words, they may be <em>too clean</em>.</p>
+
+    <p>That is not ideal when the thing you are building is supposed to detect dirty data.</p>
+
+    <p>The solution was surprisingly simple. Keep an untouched copy of a dataset, make another copy, and deliberately introduce known problems into it: remove values, duplicate records, insert impossible dates, break relationships between tables, or add values that fall outside reasonable ranges.</p>
+
+    <p>Then see whether the system catches them.</p>
+
+    <p>That changed the project from something that could merely <em>look</em> like it worked into something I could actually test. If I know exactly which defects I inserted, I can measure which ones the system detects, which ones it misses, and whether it incorrectly flags clean records.</p>
+
+    <h3>Healthcare Data Changes the Security Conversation</h3>
+    <p>My cybersecurity background made one part of the discussion especially interesting to me.</p>
+
+    <p>Healthcare data cannot simply be treated like any other collection of numbers.</p>
+
+    <p>The interview reinforced that removing a person's name from a dataset does not automatically mean the information is safe to upload wherever you want. Sensitive healthcare information should not simply be sent to a public AI service or another outside platform without the proper controls, agreements, and organizational safeguards.</p>
+
+    <p>That sounds obvious when stated that way, but it has a major effect on system design.</p>
+
+    <p>It means privacy and security cannot be something added after the program works. <strong>They have to influence how the program works from the beginning.</strong></p>
+
+    <p>For my project, that strengthened the idea that sensitive processing should stay local—or at least inside an appropriately controlled organizational environment.</p>
+
+    <p>As AI becomes easier to use, I think this distinction is going to become even more important. Being technically able to upload data somewhere does not mean that doing so is responsible.</p>
+
+    <h3>AI Isn't the Starting Point</h3>
+    <p>We also talked about artificial intelligence and predictive analytics.</p>
+
+    <p>There are exciting possibilities in healthcare: predicting which claims may be denied, identifying patients at greater risk of readmission, finding patterns in large datasets, and helping decision-makers see things that would otherwise remain buried.</p>
+
+    <p>My first instinct as a technology student is naturally to look at that and think, <em>That's where the interesting project is.</em></p>
+
+    <p>But the conversation helped me see the sequence differently.</p>
+
+    <p><strong>Prediction is downstream.</strong></p>
+
+    <p>First you have to understand the data. Then you have to determine whether it is complete enough, consistent enough, and reliable enough to use. Only after that does it make sense to ask an AI model—or any statistical model—to predict something from it.</p>
+
+    <p>That realization helped keep my capstone from growing into one of those projects that tries to solve every problem at once.</p>
+
+    <h3>Sometimes the Best Project Decision Is Knowing What Not to Build</h3>
+    <p>We also discussed interoperability—the long-running problem of different electronic health record systems not communicating cleanly with one another.</p>
+
+    <p>It is a fascinating problem.</p>
+    <p>It is also enormous.</p>
+
+    <p>More complete records could improve healthcare decision-making, but putting more information together also creates larger privacy and security concerns. Solving interoperability across healthcare systems is clearly beyond what one student can reasonably accomplish in a semester.</p>
+
+    <p>That was another useful lesson.</p>
+
+    <p>A project does not become better simply because its scope becomes larger.</p>
+
+    <p><strong>Sometimes good systems design means saying: “That's an important problem—but it isn't the problem I'm solving today.”</strong></p>
+
+    <h3>What Changed After the Interview</h3>
+    <p>I went into the interview wondering whether the Health Data Readiness Workbench was a worthwhile capstone idea.</p>
+
+    <p>I came out of it much more confident that the underlying problem was real.</p>
+
+    <p>But I also came out with a clearer idea of what the project should—and should not—be.</p>
+
+    <p>The goal is not to replace Tableau, Python, R, or other analytical tools. It is not to diagnose patients or automatically “fix” healthcare data. And predictive AI does not need to be crammed into the first version simply because AI is interesting.</p>
+
+    <p>The job of the Workbench is much simpler:</p>
+
+    <p><strong>Help someone understand the condition of their data before they trust it for analysis.</strong></p>
+
+    <p>That may not sound as glamorous as predictive AI.</p>
+
+    <p>After talking with someone who has actually worked with healthcare data, though, I started to think it might be the more important place to begin.</p>
+
+    <p><em>This article grew out of an expert interview I conducted for my Information Systems capstone. I have intentionally left the interviewee unnamed; the focus here is on what I learned from the conversation and how it changed the direction of my project.</em></p>
+
+    <div class="article-back"><a href="/writing.html">← Back to all writing</a></div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
