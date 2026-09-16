@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>Before I Built the Solution, I Had to Define the Problem | Life in Your 50s</title>
+  <meta name="description" content="What an Information Systems capstone taught me about defining the problem, writing measurable requirements, testing deliberately, and deciding whether custom software should be built at all.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="writing">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/writing.html">Writing</a><span>/</span><span>Essay</span></div>
+  <div class="article-label">Systems Analysis • Requirements • Testing</div>
+  <h1>Before I Built the Solution, I Had to Define the Problem</h1>
+  <div class="article-meta">By Robert Pelot &nbsp;•&nbsp; <time datetime="2026-09-16">September 16, 2026</time></div>
+
+  <div class="article-visual">
+    <div class="metaphor"><b>PROBLEM → REQUIREMENTS → TEST</b><p>If I cannot explain how I will test a requirement, I probably have not defined it clearly enough.</p></div>
+  </div>
+
+  <div class="article-body">
+    <p><strong>One of the easiest mistakes to make in technology is to start building too soon.</strong></p>
+
+    <p>You have an idea. You can already picture the screens, the database, the code, and maybe even the finished product. The temptation is to open an editor and start making something happen.</p>
+
+    <p>That is exactly where I was with my Health Data Readiness Workbench.</p>
+
+    <p>I already knew roughly what I wanted it to do: take healthcare-related data, examine it for quality problems, and help someone decide whether the data was actually ready for analysis. But during my Information Systems capstone, I was forced to do something much less exciting before I could build anything.</p>
+
+    <p><strong>I had to define the problem precisely enough that I could tell whether the eventual solution actually solved it.</strong></p>
+
+    <p>That turned out to be one of the most useful parts of the project.</p>
+
+    <h3>A Problem Is More Than a Feature List</h3>
+    <p>At first, it would have been easy to describe the project as a data-cleaning application. That description was not wrong, but it was not very useful either.</p>
+
+    <p>The real problem was more specific: healthcare analysts can receive datasets with missing values, duplicate identifiers, inconsistent formats, impossible dates, broken relationships between tables, and other defects that make the data less useful for analysis.</p>
+
+    <p>If those problems are not found early, they can weaken dashboards, reports, statistical analysis, claims analysis, or predictive models. A system that merely opens a CSV file or produces a nice chart does not solve that problem.</p>
+
+    <p>So I reframed the project around a different question:</p>
+
+    <p><strong><em>Can I give someone a repeatable way to understand the condition of a dataset before they trust it for analysis?</em></strong></p>
+
+    <p>That question gave the project a boundary. The Workbench did not need to prove that every medical value was clinically true. It did not need to replace Tableau, R, Python, or other analytical tools. It needed to identify defined problems, explain what was found, show which records were affected, and document limitations before downstream analysis began.</p>
+
+    <h3>Breaking a Big Idea into Smaller Problems</h3>
+    <p>Once I had a clearer problem statement, I realized that “data readiness” was not one problem at all. It was a collection of smaller problems that depended on one another.</p>
+
+    <p>The system had to import data and understand its structure. It needed rules for detecting missing, duplicated, malformed, inconsistent, or relationally invalid values. It needed to record exactly what each rule found, summarize the impact, let users review the results, and export them. Because the subject was healthcare data, security and accountability had to cut across the entire design.</p>
+
+    <p>The most important component became the validation rule engine. That was the point where the project stopped being a generic file viewer and became a real data-readiness system.</p>
+
+    <p>A vague warning such as “your data has problems” is not very useful. A specific finding such as “this encounter ends before it begins” or “this record references a patient that does not exist” gives someone something they can investigate.</p>
+
+    <h3>Requirements Forced Me to Stop Hand-Waving</h3>
+    <p>Writing requirements was another exercise that looked academic at first and became surprisingly practical.</p>
+
+    <p>It is easy to say that software should be secure, fast, accurate, and easy to use. Those words sound good, but they are difficult to test.</p>
+
+    <p>So I had to turn them into things I could measure: preserve imported source data unchanged, require authentication for non-public pages, restrict administrative functions by role, record defined actions in an audit trail, and make the core workflow usable without developer assistance.</p>
+
+    <p>I also set performance and validation targets for the capstone test environment. They were not industry-standard claims; they were acceptance targets that gave me something concrete to test against.</p>
+
+    <p>That changed the way I thought about requirements. A good requirement is not there to make a document look professional. It creates a future yes-or-no question: did the system actually do what I said it would do?</p>
+
+    <p><strong><em>If I cannot explain how I will test a requirement, I probably have not defined it clearly enough.</em></strong></p>
+
+    <h3>Testing with Problems I Created on Purpose</h3>
+    <p>One of my favorite parts of the design was the test strategy.</p>
+
+    <p>Public and synthetic healthcare datasets are useful because they let me build and test without exposing real patient information. But a dataset prepared for public use may already be fairly clean, which is awkward when the software is supposed to find bad data.</p>
+
+    <p>My solution was to keep an untouched source dataset, make a separate test copy, and deliberately corrupt the copy. I could remove required values, create duplicate identifiers, insert impossible dates, or break relationships between records. Alongside that file, I would keep a defect manifest describing exactly what I changed.</p>
+
+    <p>Now I had ground truth.</p>
+
+    <p>Instead of saying, “The application found a lot of errors, so it must be working,” I could compare known defects with detected defects. I could count what the system found, what it missed, and what it flagged incorrectly.</p>
+
+    <p>That is a much stronger test than simply looking at the screen and deciding the results seem reasonable.</p>
+
+    <h3>Security Had to Be Part of the Architecture</h3>
+    <p>The healthcare context affected the design from the beginning.</p>
+
+    <p>For the capstone, I planned to use synthetic or public-use data rather than real patient data. I also deliberately avoided claiming that a student project was “HIPAA compliant.” What I could do was apply sound principles such as controlled handling, role-appropriate access, auditability, preservation of source data, and local processing by default.</p>
+
+    <p>One requirement was especially important to me: imported row-level data should not be sent to a third-party AI or web service as part of the normal validation workflow.</p>
+
+    <p>That decision came from both my cybersecurity background and the health-informatics side of the project. Convenience is not a good enough reason to move sensitive information into a system that was never designed or approved to receive it.</p>
+
+    <p>Security was therefore not a final feature to add once the application worked. It was part of what “working correctly” meant.</p>
+
+    <h3>The Hardest Question: Should I Build It at All?</h3>
+    <p>There was one more uncomfortable question I had to answer before I could justify building my own tool:</p>
+
+    <p><strong>Does something already exist that solves this problem?</strong></p>
+
+    <p>I compared my proposed Workbench with OpenRefine, a mature open-source tool for exploring, transforming, standardizing, and cleaning messy data.</p>
+
+    <p>That comparison forced me to stop treating “custom-built” as automatically better. OpenRefine was broader in several general-purpose transformation areas, while my planned Workbench was narrower and focused on explicit healthcare-data validation, readiness metrics, controlled testing, role-based workflow, and auditability.</p>
+
+    <p>I used a weighted decision matrix to compare those problem-specific needs. The planned Workbench scored better against my narrow criteria, while OpenRefine clearly did better in general transformation breadth.</p>
+
+    <p>The useful part was not the score. The useful part was that the score had to be revisited after implementation. If I failed to build a feature or it did not pass its acceptance test, the Workbench's rating had to come down.</p>
+
+    <p>That made the decision testable instead of self-justifying.</p>
+
+    <h3>What I Took Away from the Exercise</h3>
+    <p>Before this project, I tended to think of problem analysis and requirements as the paperwork that came before the interesting part.</p>
+
+    <p>I do not see them that way anymore.</p>
+
+    <p>The analysis changed what I was building. It narrowed the scope. It exposed dependencies. It made security part of the architecture. It gave me a test strategy. It forced me to define success in measurable terms. And it made me compare my idea with an existing tool before assuming that writing my own software was justified.</p>
+
+    <p><strong>Most importantly, it gave me a way to recognize failure.</strong></p>
+
+    <p>If a project can only succeed because I get to redefine success after I finish it, then I never really tested the idea.</p>
+
+    <p>Defining the problem first gave me something much better than a feature list.</p>
+
+    <p><strong>It gave me a standard the finished system would have to meet.</strong></p>
+
+    <p><em>This article grew out of the problem-analysis and requirements work for my Information Systems capstone, the Health Data Readiness Workbench. The original coursework used formal software-engineering methods; this version focuses on how those methods changed the way I approached the project.</em></p>
+
+    <div class="article-back"><a href="/writing.html">← Back to all writing</a></div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
