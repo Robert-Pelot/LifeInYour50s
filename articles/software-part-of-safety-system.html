@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>When Software Becomes Part of the Safety System | Life in Your 50s</title>
+  <meta name="description" content="What the Therac-25 accidents taught me about redundancy, testing, interfaces, communication, and the danger of overconfidence in safety-critical software.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="writing">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/writing.html">Writing</a><span>/</span><span>Essay</span></div>
+  <div class="article-label">Software Safety • Testing • Systems Thinking</div>
+  <h1>When Software Becomes Part of the Safety System</h1>
+  <div class="article-meta">By Robert Pelot &nbsp;•&nbsp; <time datetime="2026-09-16">September 16, 2026</time></div>
+
+  <div class="article-visual">
+    <div class="metaphor"><b>DESIGN → FAILURE → PROTECTION</b><p>Reliable systems are built by deciding what should happen when one component does not.</p></div>
+  </div>
+
+  <div class="article-body">
+    <p><strong>Most of the software I have worked with can fail without hurting anyone.</strong></p>
+
+    <p>A webpage can stop loading. A script can throw an error. A database query can return the wrong result. Those failures may be annoying, expensive, or embarrassing, but they are usually recoverable.</p>
+
+    <p><strong>Then there are systems where software failure can become physical harm.</strong></p>
+
+    <p>The Therac-25 case changed the way I think about that distinction.</p>
+
+    <p>Therac-25 was a computer-controlled radiation therapy machine used in the 1980s. Between 1985 and 1987, several patients received massive radiation overdoses. The problem was not one bad line of code or one careless operator. It was a combination of software defects, removed hardware safeguards, weak testing, confusing error messages, poor communication, and too much confidence that the software could not fail.</p>
+
+    <p><strong>That combination is what makes the case still worth studying.</strong></p>
+
+    <h3>The Dangerous Assumption Was Not Just in the Code</h3>
+    <p>One of the most striking parts of the Therac-25 story is that the technical failure was surrounded by assumptions.</p>
+
+    <p>A race condition allowed certain rapid changes to treatment parameters to leave the machine in an unsafe state. That is a software problem. But the deeper problem was that the system had been designed as though such a state could not happen.</p>
+
+    <p>Earlier machines used physical hardware interlocks as an independent safety layer. In the Therac-25, those protections were removed because the software was expected to prevent unsafe configurations.</p>
+
+    <p>That decision turned a software bug into something far more dangerous.</p>
+
+    <p>Redundancy can look inefficient when everything is working. Two independent safeguards may seem like duplication. But in a safety-critical system, duplication is often the point.</p>
+
+    <p>If one layer fails, another layer should still keep the failure from reaching the person on the other side of the machine.</p>
+
+    <p><strong><em>A safety mechanism that depends on the same system it is supposed to protect against is not much of a backup.</em></strong></p>
+
+    <h3>Testing the Happy Path Is Not Enough</h3>
+    <p>Another lesson is how dangerous it can be to test only the way a system is expected to be used.</p>
+
+    <p>The Therac-25 software reused code from earlier machines, but the overall system had changed. The software was given more responsibility, yet the testing did not increase to match that responsibility.</p>
+
+    <p>Real operators also do not behave like a neat test script. They work quickly. They correct entries. They develop habits. They respond to alarms based on what they have seen before.</p>
+
+    <p>That matters because the race condition could be triggered by rapid operator input.</p>
+
+    <p>A test plan that proves a machine works when every step is entered slowly and perfectly does not prove the machine is safe under real operating conditions.</p>
+
+    <p>The same idea applies far beyond medical devices. Good testing has to include edge cases, timing issues, unusual sequences, recovery from error, and the messy behavior of real people.</p>
+
+    <h3>The User Interface Was Part of the Safety Problem</h3>
+    <p>I also found the operator interface surprisingly important.</p>
+
+    <p>The machine displayed cryptic messages such as “MALFUNCTION 54” without clearly telling the operator what had happened or how serious it was.</p>
+
+    <p>Worse, operators had become accustomed to overriding warnings because many alerts were not meaningful.</p>
+
+    <p>That is not simply a usability problem.</p>
+
+    <p>When operators learn that alarms are usually noise, the system is training them to ignore the one alarm that may matter.</p>
+
+    <p>A warning only works if the person receiving it understands what it means, trusts it, and knows what action to take.</p>
+
+    <p>In a safety-critical environment, interface design is part of the safety architecture.</p>
+
+    <h3>One Failure Became Many Failures</h3>
+    <p>The Therac-25 accidents were also a reminder that technical failures rarely stay purely technical.</p>
+
+    <p>Engineers had responsibilities to test assumptions and report risks. Management had responsibilities to respond seriously to incident reports and share accurate information. Hospitals needed reliable equipment and training. Regulators had to independently evaluate safety. Operators needed clear information from the machine.</p>
+
+    <p>When early overdose reports appeared, the manufacturer initially treated them too narrowly and did not quickly connect incidents across different hospitals.</p>
+
+    <p>That delayed recognition of a common underlying problem.</p>
+
+    <p>This is where the case stops looking like a story about a race condition and starts looking like a story about an organization.</p>
+
+    <p>A bug can begin in code, but whether that bug becomes a disaster depends on the system around the code: testing, documentation, communication, management, oversight, and the willingness to believe that something may actually be wrong.</p>
+
+    <h3>“The Software Cannot Do That” Is Not an Investigation</h3>
+    <p>The part of the case that bothers me most is the confidence placed in the software.</p>
+
+    <p>When evidence from the real world conflicts with what engineers believe the system is capable of doing, the evidence has to win.</p>
+
+    <p>You cannot dismiss an unexpected result simply because the design says it should be impossible.</p>
+
+    <p>That mindset is especially dangerous in systems where the consequences of being wrong are severe.</p>
+
+    <p>A better response is to preserve evidence, reproduce the sequence, challenge assumptions, and ask what combination of failures could have produced the result.</p>
+
+    <p>In troubleshooting, “that cannot happen” is often the point where the real investigation should begin.</p>
+
+    <p><strong><em>Reality does not care what the design document says is impossible.</em></strong></p>
+
+    <h3>Why This Case Still Matters</h3>
+    <p>The technology in the Therac-25 is decades old, but the lesson is not.</p>
+
+    <p>Modern systems put software into vehicles, industrial controls, medical equipment, infrastructure, financial systems, and countless other places where failure can affect real people.</p>
+
+    <p>We also continue to remove physical controls and replace them with software because software is flexible, cheaper to change, and easier to integrate.</p>
+
+    <p>That can be a good design decision. But every time software takes over a safety function, the standard for testing, monitoring, failure handling, and independent protection has to rise with it.</p>
+
+    <p>The question is not whether software is trustworthy.</p>
+
+    <p>The question is whether the entire system is designed with the assumption that software can fail.</p>
+
+    <h3>The Lesson I Took Away</h3>
+    <p>Before studying Therac-25, I would have described it as a famous software failure.</p>
+
+    <p>I do not think that description is good enough anymore.</p>
+
+    <p><strong>It was a systems failure.</strong></p>
+
+    <p>The software had defects, but the tragedy required much more than defective code: overconfidence, lost redundancy, inadequate testing, poor interface design, weak communication, and failures of responsibility across several organizations.</p>
+
+    <p>That is what makes the case useful to anyone who builds or supports technology.</p>
+
+    <p>Reliable systems are not created by assuming every component will work.</p>
+
+    <p><strong>They are created by deciding what should happen when one of them does not.</strong></p>
+
+    <p><em>This article grew out of a computing ethics case study I wrote on the Therac-25 radiation therapy accidents. The original assignment focused on stakeholders and the ACM Code of Ethics; this version focuses on the engineering lessons I found most useful: redundancy, realistic testing, operator interfaces, communication, and the danger of assuming software cannot fail.</em></p>
+
+    <div class="article-back"><a href="/writing.html">← Back to all writing</a></div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
