@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>From Reconnaissance to Remediation | Life in Your 50s</title>
+  <meta name="description" content="A sanitized cybersecurity portfolio case study showing an authorized penetration-testing workflow from reconnaissance and enumeration through vulnerability validation, risk assessment, and remediation.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/projects.html">Projects</a><span>/</span><span>Cybersecurity case study</span></div>
+  <div class="article-label">Penetration Testing • Vulnerability Assessment • Remediation</div>
+  <h1>From Reconnaissance to Remediation</h1>
+  <div class="article-meta">Authorized academic lab &nbsp;•&nbsp; Sanitized portfolio case study</div>
+
+  <div class="article-visual">
+    <div class="metaphor"><b>DISCOVER → ENUMERATE → VALIDATE → ASSESS → REMEDIATE</b><p>The useful part of penetration testing is turning technical evidence into a security decision someone can act on.</p></div>
+  </div>
+
+  <div class="article-body">
+    <p><strong>Penetration testing is easy to reduce to a list of tools: Nmap, Metasploit, OpenVAS, enum4linux, and a few screenshots proving that something worked.</strong></p>
+
+    <p>The project that stayed with me was not really about the tools.</p>
+
+    <p><strong>It was about the process that connects reconnaissance to a useful security decision.</strong></p>
+
+    <p>The work was completed in an authorized academic environment and documented under the NextGenix project name. It began with network discovery and host enumeration, progressed into vulnerability validation and controlled exploitation, and ended with a client-style report that translated technical findings into risk, priority, and remediation.</p>
+
+    <div class="public-note"><strong>Public-safe version:</strong> target addresses, credentials, exact exploit commands, and raw exploitation evidence have been intentionally removed or redacted. The screenshots below are sanitized versions of original project evidence.</div>
+
+    <h3>Start with Scope, Not Scanning</h3>
+    <p>One of the most useful parts of the project happened before any vulnerability was confirmed: defining what was actually in scope.</p>
+
+    <p>The final report identified a bounded internal lab network containing Windows servers, a domain controller, VMware infrastructure, and supporting services. The work then followed a repeatable path: identify live hosts, enumerate services, test exposed surfaces, validate meaningful findings, and document what should change.</p>
+
+    <p>Without scope, scanning is just activity. With scope, every test has a reason and every result has a place in the final assessment.</p>
+
+    <h3>Reconnaissance Is About Building a Map</h3>
+    <p>The early reconnaissance work was deliberately broad. I documented hosts, operating systems, ports, services, workgroup or domain information, and visible account information in the lab. I also used wider Nmap discovery and service-detection scans to understand what was reachable and what each system appeared to be doing.</p>
+
+    <p><strong>A port number by itself is not a finding. It is a clue.</strong></p>
+
+    <p>An open service becomes meaningful only when it is connected to the operating system, the role of the host, the version or configuration in use, and the potential path an attacker could take from that exposure.</p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/nextgenix-nmap-discovery.webp" alt="Sanitized Nmap service and operating-system discovery from the authorized NextGenix lab" loading="lazy" style="width:100%;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:#a9bbcc;font-size:.82rem">Sanitized Nmap discovery evidence. Target addressing has been removed while preserving the service and operating-system identification work.</figcaption>
+    </figure>
+
+    <h3>Enumeration Adds Context</h3>
+    <p>After discovery, the next step was to understand what the exposed services revealed. Enumeration helped connect a host to the identities, domain information, and service behavior around it.</p>
+
+    <p>This is where a simple network map starts becoming an attack-surface model. The objective is not to collect information for its own sake; it is to understand what an attacker could learn before attempting anything more intrusive.</p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/nextgenix-enumeration.webp" alt="Sanitized enum4linux enumeration evidence from the authorized NextGenix lab" loading="lazy" style="width:100%;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:#a9bbcc;font-size:.82rem">Sanitized enumeration evidence. Lab addresses, workgroup information, and other identifying details have been redacted.</figcaption>
+    </figure>
+
+    <h3>Validate the Finding Instead of Trusting the Scanner</h3>
+    <p>Automated scanners are useful because they can surface a large number of possible issues quickly. They are not a substitute for validation.</p>
+
+    <p>In the lab, multiple tools were used to compare what the network exposed with what vulnerability checks reported. One critical legacy SMB weakness on an outdated Windows server was then confirmed through controlled exploitation in the authorized environment.</p>
+
+    <p>That distinction mattered to me. A scanner saying that a system may be vulnerable is different from evidence showing that the weakness is actually exploitable under the conditions being tested.</p>
+
+    <p>At the same time, successful exploitation was not the end of the exercise. Once the risk was proven, the next question became more important: <strong>what should the organization do about it?</strong></p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/nextgenix-openvas-findings.webp" alt="Sanitized Greenbone OpenVAS vulnerability findings from the authorized NextGenix lab" loading="lazy" style="width:100%;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:#a9bbcc;font-size:.82rem">Sanitized Greenbone/OpenVAS results showing how scanner findings were reviewed by severity before being interpreted in the final report.</figcaption>
+    </figure>
+
+    <h3>Turn Technical Findings into Risk</h3>
+    <p>The final report did not simply dump every open port or scanner message into a document. Findings were grouped around impact and remediation.</p>
+
+    <p>A confirmed legacy SMB weakness represented the possibility of remote code execution and system-level compromise. Exposed identity and directory services could assist reconnaissance or lateral movement. Management-interface weaknesses increased the risk around administrative systems. Weak internal segmentation could make a compromise on one host more useful to an attacker than it should be.</p>
+
+    <p>Those are security decisions, not tool outputs.</p>
+
+    <h3>The Useful Deliverable Is the Remediation Plan</h3>
+    <p>The final report recommended patching vulnerable Windows and VMware systems, disabling or restricting outdated protocols, tightening authentication, reducing anonymous access, improving logging, segmenting critical infrastructure, and reviewing unnecessary services and open ports.</p>
+
+    <p><strong>That changed how I thought about security reports.</strong></p>
+
+    <p>A finding is valuable only if the person receiving it can understand what the risk means, how urgent it is, and what action would reduce it.</p>
+
+    <p>The technical evidence has to survive the transition from the testing workstation to the person responsible for budgets, maintenance windows, access policy, and operational risk.</p>
+
+    <h3>The Project Was Also About Professional Communication</h3>
+    <p>A separate proposal framed the work as a professional white-hat engagement: define the requested services, estimate the effort, commit to a schedule, perform the analysis, and deliver findings with proposed solutions.</p>
+
+    <p>The finished package then included an executive summary, scope, methodology, findings, recommendations, conclusion, and supporting evidence.</p>
+
+    <p>Technical testing and professional reporting are not two unrelated skills. The report is how the technical work becomes useful to someone who was not sitting at the keyboard during the test.</p>
+
+    <h3>What I Took Away</h3>
+    <p>Before this project, it was easy to think of penetration testing as the moment an exploit succeeds.</p>
+
+    <p>After working through the complete process, I see that moment as only one piece of the engagement.</p>
+
+    <p>The more complete skill is being able to move from an unknown environment to a defensible conclusion: understand the scope, map the systems, identify exposed services, validate important weaknesses, judge the risk, preserve evidence, and recommend changes that make the environment harder to compromise.</p>
+
+    <p><strong>That is the part of penetration testing I find most useful: not proving that something can be broken, but explaining how to make it stronger.</strong></p>
+
+    <h3>Techniques and Tools Demonstrated</h3>
+    <div class="tag-row">
+      <span class="tag">Nmap</span>
+      <span class="tag">OpenVAS / Greenbone</span>
+      <span class="tag">enum4linux</span>
+      <span class="tag">Metasploit</span>
+      <span class="tag">Service enumeration</span>
+      <span class="tag">Vulnerability validation</span>
+      <span class="tag">Risk prioritization</span>
+      <span class="tag">Network segmentation</span>
+      <span class="tag">Remediation planning</span>
+      <span class="tag">Client reporting</span>
+    </div>
+
+    <p style="margin-top:2rem"><em>This case study consolidates three pieces of project evidence: an initial reconnaissance and enumeration report, a proposal defining the authorized engagement, and the final customer-style penetration-test report. The public version intentionally omits raw exploit instructions, credentials, and target-specific information.</em></p>
+
+    <div class="article-back"><a href="/projects.html">← Back to projects</a></div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
