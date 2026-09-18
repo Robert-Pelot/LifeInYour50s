@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>From CRUD Endpoints to an API Architecture | Life in Your 50s</title>
+  <meta name="description" content="A software-engineering case study about growing a course-registration API from CRUD endpoints into layered architecture driven by user stories, testing, and data relationships.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/projects.html">Projects</a><span>/</span><span>Software architecture case study</span></div>
+  <div class="article-label">Software Engineering • REST APIs • Architecture</div>
+  <h1>From CRUD Endpoints to an API Architecture</h1>
+  <div class="article-meta">Coursework project &nbsp;•&nbsp; Portfolio case study</div>
+
+  <div class="article-visual">
+    <div class="metaphor"><b>REQUEST → CONTROLLER → SERVICE → REPOSITORY → SQL</b><p>The endpoint is only the visible edge of the system. The interesting work is what has to happen behind it.</p></div>
+  </div>
+
+  <div class="article-body">
+    <p><strong>At first, a REST API can feel like a collection of verbs and URLs: GET something, POST something new, PUT a change, DELETE what no longer belongs.</strong></p>
+
+    <p>That was the starting point of this project. I was building an API around courses, core goals, and course offerings, and the early goal was straightforward: make the endpoints work.</p>
+
+    <p>What changed for me was realizing that a working endpoint is not the same thing as a well-designed system.</p>
+
+    <p><strong>I started the project thinking mostly about whether an endpoint returned the right result. I finished it thinking much more about how a change moves through a system.</strong></p>
+
+    <h3>CRUD Was the Starting Point</h3>
+    <p>The first version covered the familiar API operations: retrieve courses, retrieve core goals, add records, edit them, delete them, and follow the relationships between courses and goals. Postman made it easy to see whether the HTTP side of the application was behaving the way I expected.</p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/api-postman-core-goals.webp" alt="Postman request and JSON response from the course API" loading="lazy" style="width:100%;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:var(--muted);font-size:.9rem">A working API request was useful evidence, but it was only the beginning of the design problem.</figcaption>
+    </figure>
+
+    <p>One early design choice forced me to think beyond simply matching an assignment specification. Two requested operations would have collided at the same route, so I separated the behavior instead of pretending one URL could represent two different jobs. In another case, I chose a POST operation that could assign a list of courses to a goal rather than limiting the operation to one course at a time.</p>
+
+    <p>Those were small decisions, but they were the first signs that API design is really about expressing intent clearly.</p>
+
+    <h3>Then One Feature Started Touching Six Places</h3>
+    <p>The repository-layer work made the architecture much more concrete. Adding a new feature was no longer a matter of dropping one more method into a controller.</p>
+
+    <p>A complete change could require updates in six places:</p>
+
+    <ol>
+      <li>the repository interface,</li>
+      <li>the repository implementation and SQL query,</li>
+      <li>the service layer,</li>
+      <li>the service tests,</li>
+      <li>the controller and HTTP endpoint, and</li>
+      <li>the service interface.</li>
+    </ol>
+
+    <p>That was when terms like <em>separation of concerns</em>, <em>repository pattern</em>, and <em>SOLID</em> stopped feeling like vocabulary words. They became a way to understand why the project was organized the way it was.</p>
+
+    <p><strong>A layered design does not make change disappear. It gives the change a predictable path.</strong></p>
+
+    <h3>The Data Model Can Betray the API</h3>
+    <p>The more interesting problems appeared after the basic endpoints worked.</p>
+
+    <p>I noticed that a course with no offerings could disappear from the normal course-discovery path. A course that was not connected to a core goal would never appear in goal-based searches. And the original create-course workflow accepted the course itself but gave the caller no way to say which core goal or goals it belonged to.</p>
+
+    <p>In other words, the API could successfully create a record that later became difficult to discover through the very searches the application was supposed to support.</p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/api-mysql-coregoalcourses.webp" alt="MySQL relationship table connecting core goals and courses" loading="lazy" style="width:100%;max-width:760px;display:block;margin:auto;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:var(--muted);font-size:.9rem;text-align:center">The relationship table made the real design issue visible: API behavior depended on how courses, goals, and offerings were connected.</figcaption>
+    </figure>
+
+    <p>That was an important shift in how I looked at the project. The controller was not the application. The database was not the application. The API was the behavior created by all of those pieces working together.</p>
+
+    <h3>User Stories Forced the Architecture to Grow</h3>
+    <p>After completing the required work, I realized that several searches designed around the user stories still were not exposed through the web API. So I went back and added them.</p>
+
+    <p>The API grew to support things such as offerings by semester and department, offerings by core goal and semester, courses matching multiple core goals, goals missing offerings in a semester, and course searches by department. I also added Swagger so the available API surface could be inspected and exercised more easily.</p>
+
+    <p>This is where the project stopped feeling like a collection of CRUD demonstrations and started feeling more like an actual service.</p>
+
+    <h3>Testing Meant More Than Seeing a 200</h3>
+    <p>I also became more deliberate about testing the lifecycle of a change. Adding a course was followed by verifying that it existed. Editing it was followed by verifying the changed data. Deleting it was followed by checking that it was actually gone.</p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/api-postman-create-course.webp" alt="Postman POST request returning 201 Created from the course API" loading="lazy" style="width:100%;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:var(--muted);font-size:.9rem">A successful POST returning 201 Created—followed by verification of the persisted result.</figcaption>
+    </figure>
+
+    <p>A green status code is useful, but it does not prove the rest of the application still makes sense. The stronger question became: <em>Does this operation behave correctly when viewed through the other features that depend on the same data?</em></p>
+
+    <h3>What I Took Away</h3>
+    <p>Before this project, it was easy for me to think of an API primarily as a set of endpoints.</p>
+
+    <p>After working through repositories, services, controllers, relationships, tests, and user stories, I see the endpoint as the smallest visible part of the architecture.</p>
+
+    <p>The more important skill is understanding how a requirement travels through the layers underneath it—and recognizing when a design that technically works is still creating problems somewhere else.</p>
+
+    <p><strong>That is what I took away from this project: software architecture is not about adding layers for their own sake. It is about making change understandable.</strong></p>
+
+    <h3>Techniques and Tools Demonstrated</h3>
+    <p>This project gave me hands-on experience with the parts of an API that sit behind the endpoint: controllers, service and repository layers, relational data, validation, testing, and the HTTP interface presented to a client. Just as important, it taught me to look for problems that appear only when those pieces interact.</p>
+
+    <div class="tag-row" style="margin-bottom:2rem">
+      <span class="tag">C#</span>
+      <span class="tag">ASP.NET Core</span>
+      <span class="tag">REST APIs</span>
+      <span class="tag">Repository pattern</span>
+      <span class="tag">Service layer</span>
+      <span class="tag">Controllers</span>
+      <span class="tag">SOLID</span>
+      <span class="tag">MySQL</span>
+      <span class="tag">Postman</span>
+      <span class="tag">Swagger</span>
+      <span class="tag">Unit testing</span>
+    </div>
+
+    <h3>See the Working Project</h3>
+    <p>The public portfolio edition of this project is available on GitHub. It includes the application source, automated tests, database schema, GitHub Actions workflow, and instructions for running the API locally. That repository grew from the same Spring 2026 course project described in this case study, with classroom scaffolding removed and the code prepared as a standalone portfolio project.</p>
+
+    <div class="action-row" style="margin:1.25rem 0 2.25rem">
+      <a class="btn btn-primary" href="https://github.com/Robert-Pelot/courseRegistrationAPI" target="_blank" rel="noopener noreferrer">View GitHub repository</a>
+    </div>
+
+    <a class="back-link" href="/projects.html">← Back to projects</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
