@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>HomeControl: Secure Remote AV & Audit | Life in Your 50s</title>
+  <meta name="description" content="A sanitized homelab case study showing a secure, tailnet-only remote camera and microphone control system built with Python, FFmpeg, MediaMTX, Tailscale, SQLite, and Homepage.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/projects.html">Projects</a><span>/</span><span>HomeControl</span></div>
+  <div class="article-label">Homelab • Python • Secure Remote Access • Streaming • Audit</div>
+  <h1>HomeControl: Secure Remote AV & Audit</h1>
+  <div class="article-meta">Personal homelab build &nbsp;•&nbsp; Sanitized public case study</div>
+
+  <div class="article-visual">
+    <div class="metaphor">
+      <b>REQUEST → AUTHORIZE → CAPTURE → STREAM → AUDIT</b>
+      <p>The goal was not simply to make a camera feed work. It was to make remote access deliberate, private, observable, and easy enough to use every day.</p>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <p><strong>HomeControl started with a practical problem: I wanted to be able to remotely turn on a camera and microphone attached to my primary Windows workstation, view and listen from my phone, then turn everything back off when I was finished.</strong></p>
+
+    <p>The technical challenge was not getting video onto a screen. The interesting part was deciding how to expose that capability without opening a camera service to the public Internet, how to keep capture off until requested, how to make the controls usable, and how to retain enough audit information to know what actually connected.</p>
+
+    <div class="public-note"><strong>Public-safe version:</strong> private IP addresses, internal DNS names, account identifiers, tailnet addresses, exact firewall source rules, and other environment-specific details are intentionally omitted. The architecture and engineering decisions are preserved.</div>
+
+    <h3>The Design Goal</h3>
+    <p>I wanted the normal resting state to be simple: the streaming service is ready, but the camera and microphone are off. When I deliberately request access, the capture process starts, publishes into the local streaming stack, and becomes available locally or through the approved remote path.</p>
+
+    <p>That led to a design with several small components instead of one large exposed application.</p>
+
+    <div class="network-flow" aria-label="Simplified HomeControl architecture">
+      <div class="flow-node"><small>Approved endpoint</small><strong>Mobile device</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node flow-node-accent"><small>Private access</small><strong>Tailnet-only HTTPS</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Local gateway</small><strong>Python control service</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Media path</small><strong>FFmpeg → MediaMTX</strong></div>
+    </div>
+
+    <p>A separate internal path connects the same control service to my self-hosted Homepage dashboard. This lets me use the same ON, OFF, VIEW, and AUDIT actions from the LAN without weakening the remote boundary.</p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/homecontrol-dashboard.png" alt="HomeControl dashboard card showing Remote AV, Capture, Stream Server, Audit, and ON OFF VIEW controls" loading="lazy" style="display:block;max-width:100%;width:680px;margin:0 auto;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:#a9bbcc;font-size:.82rem;text-align:center">The actual Homepage control card. The status row shows capture, streaming, and audit health; the action row provides deliberate controls.</figcaption>
+    </figure>
+
+    <h3>Keep Capture Off Until It Is Requested</h3>
+    <p>MediaMTX stays available as the media server, but FFmpeg is the component that owns the physical camera and microphone capture. The Python controller starts FFmpeg only when Remote AV is turned on and keeps a handle to that process.</p>
+
+    <p>When the session is finished, the controller sends FFmpeg its normal quit command through stdin instead of routinely killing the process. That change mattered more than it sounds: forced process termination had produced long, inconsistent shutdown times, while graceful shutdown reduced stop time to well under a second in normal testing.</p>
+
+    <h3>Choose Reliability Over the Flashiest Protocol</h3>
+    <p>I initially wanted a near-real-time WebRTC viewer. The media stack could produce WebRTC, but browser-side ICE negotiation was not consistently reliable in this environment.</p>
+
+    <p>Rather than leave the system in a fragile half-working state, I switched the remote viewer to HLS using fragmented MP4. I also changed the remote Python gateway from buffering entire media responses to forwarding them in chunks as they arrived.</p>
+
+    <p>That tradeoff produced a remote delay of roughly <strong>3–5 seconds</strong>, but the stream became dependable. For this project, a few seconds of latency was a better result than sub-second latency that sometimes failed to connect.</p>
+
+    <h3>Do Not Put the Camera on the Public Internet</h3>
+    <p>The remote side is intentionally private. The workstation does not rely on router port forwarding for this service, and the project does not use a public Tailscale Funnel.</p>
+
+    <p>Instead, an approved mobile device reaches a tailnet-only HTTPS endpoint. Tailscale Serve forwards that connection to a gateway bound only to localhost on the Windows machine. The remote policy is intentionally narrow: the approved endpoint is allowed to reach only the HTTPS entry point required by HomeControl.</p>
+
+    <p><strong>The important design idea is that the remote gateway is not simply another web server listening on every interface.</strong> It is reachable because a trusted private access layer deliberately hands traffic to it.</p>
+
+    <h3>Layer the Local Pieces Too</h3>
+    <p>The local environment uses internal DNS and a reverse proxy so the dashboard can refer to readable service names rather than embedding raw addresses everywhere. Windows Firewall restricts the control API to the specific internal systems that need it.</p>
+
+    <p>The media path and the control path are also separate. That separation made troubleshooting easier because I could independently ask: Is the controller healthy? Is capture running? Is the stream server ready? Is the viewer reachable?</p>
+
+    <h3>Make Security Visible</h3>
+    <p>Once the remote path worked, I did not want security to disappear into configuration files. The Homepage card now includes an <strong>Audit</strong> status field alongside Remote AV, Capture, and Stream Server.</p>
+
+    <p>An expected connection shows a normal green state. If the application records a different remote identity or endpoint than the one I expect, the dashboard changes to a CHECK state so that the abnormal condition is visible without opening a database.</p>
+
+    <h3>Keep the Raw Evidence, Show the Useful Version</h3>
+    <p>HomeControl writes audit records into SQLite. The detailed data includes timestamps, request paths, result codes, remote identity information, user-agent details, and other fields useful during troubleshooting.</p>
+
+    <p>That is useful for evidence, but it is not what I want to read every day.</p>
+
+    <p>I added a separate audit-history page that reduces the raw records to the information I actually care about:</p>
+
+    <div class="content-panel" style="margin:1.5rem 0 2rem">
+      <p><strong>Connections</strong></p>
+      <p>Device classification • date • local connection time • local disconnect time</p>
+      <p><strong>Attempted / failed access</strong></p>
+      <p>Device classification • date • local time • result</p>
+    </div>
+
+    <p>The detailed database remains underneath the clean interface. That pattern became one of my favorite parts of the project: preserve the evidence, but design the operational view around the decisions a person actually needs to make.</p>
+
+    <h3>Noise Is Not the Same as a Security Event</h3>
+    <p>Browsers generate harmless extra requests—favicons, speculative fetches, and ordinary 404s. Treating all of that as suspicious would make the audit screen noisy enough that it would stop being useful.</p>
+
+    <p>The clean history therefore suppresses known low-value browser noise from the approved device while retaining meaningful failed or unexpected application-level access.</p>
+
+    <p>There is also an important visibility boundary: if the private network layer rejects a connection before it ever reaches HomeControl, the application cannot log a request it never received. The audit database represents activity that reached the application boundary, not every packet rejected elsewhere in the stack.</p>
+
+    <h3>Automatic Startup Without Automatic Capture</h3>
+    <p>The controller and remote gateway are launched through Windows Scheduled Tasks at user logon. That allows the control plane and stream server to return after a normal restart while still leaving the camera and microphone off.</p>
+
+    <p>The intended post-login state is:</p>
+
+    <div class="metaphor"><b>REMOTE AV: OFF &nbsp;•&nbsp; CAPTURE: OFF &nbsp;•&nbsp; STREAM SERVER: READY &nbsp;•&nbsp; AUDIT: OK</b></div>
+
+    <h3>What Changed Between the First Working Version and the Useful Version</h3>
+    <p>The project evolved through several small but important changes:</p>
+
+    <ul>
+      <li>Moved RTSP ingest to localhost instead of exposing it unnecessarily.</li>
+      <li>Kept MediaMTX persistent while making physical capture on-demand.</li>
+      <li>Replaced forced FFmpeg termination with graceful process shutdown.</li>
+      <li>Abandoned unreliable WebRTC behavior in favor of stable HLS/fMP4 delivery.</li>
+      <li>Changed the remote gateway from full-response buffering to streaming chunks.</li>
+      <li>Restricted the remote path to an approved mobile endpoint and HTTPS entry point.</li>
+      <li>Added SQLite audit logging instead of relying only on console output.</li>
+      <li>Separated detailed forensic records from a clean human-readable audit view.</li>
+      <li>Integrated operational status and controls into Homepage.</li>
+    </ul>
+
+    <h3>What This Project Demonstrates</h3>
+    <div class="tag-row">
+      <span class="tag">Python</span>
+      <span class="tag">Windows administration</span>
+      <span class="tag">FFmpeg</span>
+      <span class="tag">MediaMTX</span>
+      <span class="tag">HLS / fMP4</span>
+      <span class="tag">Tailscale</span>
+      <span class="tag">Zero-trust-style access</span>
+      <span class="tag">Windows Firewall</span>
+      <span class="tag">Reverse proxy</span>
+      <span class="tag">Internal DNS</span>
+      <span class="tag">SQLite</span>
+      <span class="tag">REST APIs</span>
+      <span class="tag">Process management</span>
+      <span class="tag">Operational dashboards</span>
+      <span class="tag">Audit logging</span>
+    </div>
+
+    <h3>What I Took Away</h3>
+    <p>The biggest lesson was that a working prototype and a trustworthy system are not the same thing.</p>
+
+    <p>The first success was seeing video remotely. The more valuable work came afterward: reducing exposure, tightening the remote path, improving process behavior, measuring latency, choosing a more reliable protocol, separating local and remote concerns, recording access, and making the result easy to understand from one dashboard card.</p>
+
+    <p><strong>The finished system is useful because the security and operational behavior are part of the design, not features added after the camera feed worked.</strong></p>
+
+    <p style="margin-top:2rem"><em>This public case study is intentionally sanitized. The private build documentation contains the environment-specific ports, addresses, scheduled-task settings, recovery steps, and reproduction details needed to rebuild the system.</em></p>
+
+    <div class="article-back"><a href="/projects.html">← Back to projects</a></div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
