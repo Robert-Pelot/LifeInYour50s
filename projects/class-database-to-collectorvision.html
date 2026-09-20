@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>From a Class Database to CollectorVision | Life in Your 50s</title>
+  <meta name="description" content="How a Hot Wheels database assignment evolved into CollectorVision, a self-hosted catalog, recognition, and collection-management system.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/projects.html">Projects</a><span>/</span><span>CollectorVision</span></div>
+  <div class="article-label">Database Design • Python • Computer Vision • Self-Hosting</div>
+  <h1>From a Class Database to CollectorVision</h1>
+  <div class="article-meta">Coursework that kept evolving &nbsp;•&nbsp; Active personal project</div>
+
+  <div class="article-visual">
+    <div class="metaphor">
+      <b>MODEL → POPULATE → PLAN → REBUILD → RECOGNIZE → OPERATE</b>
+      <p>The interesting part was not finishing the database assignment. It was realizing that the assignment had exposed a problem I still wanted to solve after the class ended.</p>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <p><strong>CollectorVision did not begin as an image-recognition project.</strong> It began much more simply: I wanted a structured way to manage a real die-cast collection, and a database course gave me a reason to formalize the problem.</p>
+
+    <p>The first version focused on tables, relationships, sample data, and the rules needed to describe cars, brands, condition, rarity, purchases, storage, materials, photos, and sales. What happened afterward is the part that became portfolio-worthy: I kept rebuilding the idea until it became a self-hosted application with a reference catalog, verified collection data, image workflows, OCR, computer vision, review tools, and operational documentation.</p>
+
+    <div class="public-note"><strong>What this case study is:</strong> a look at how the design evolved. Some early cloud security and backup material was coursework planning rather than proof that every proposed Azure control was deployed. The current CollectorVision architecture described here reflects the working project and its public repository.</div>
+
+    <h3>1. Start With the Data Model</h3>
+    <p>The original database design was built around a straightforward inventory problem. A car needed relationships to things such as brand, category, condition, rarity, purchase information, storage location, materials, and photos. Some relationships were one-to-many; others, such as materials, required a many-to-many design.</p>
+
+    <p>That first exercise taught me something that still shapes CollectorVision: if the relationships are vague, the application logic becomes vague too. Before worrying about recognition or automation, I had to decide what the system was actually trying to represent.</p>
+
+    <div class="network-flow" aria-label="Simplified early database model">
+      <div class="flow-node flow-node-accent"><small>Core record</small><strong>Car</strong></div>
+      <div class="flow-arrow">↔</div>
+      <div class="flow-node"><small>Classification</small><strong>Brand / category / rarity</strong></div>
+      <div class="flow-arrow">↔</div>
+      <div class="flow-node"><small>Ownership</small><strong>Purchase / storage</strong></div>
+      <div class="flow-arrow">↔</div>
+      <div class="flow-node"><small>Evidence</small><strong>Photos</strong></div>
+    </div>
+
+    <h3>2. Populate It With Real Data</h3>
+    <p>The next milestone moved from an ERD and business rules into actual SQL. Lookup tables were populated for manufacturers, conditions, categories, makes, materials, rarity, purchase locations, and storage. Car records referenced those tables instead of repeating the same descriptive text everywhere.</p>
+
+    <p>Photos were already modeled as their own records linked to a car, which mattered later. A collection object is rarely represented well by one image, and the idea of one record having multiple useful views eventually became a much larger part of CollectorVision.</p>
+
+    <div class="content-panel" style="margin:1.5rem 0 2rem">
+      <p><strong>Early lesson:</strong> normalization was not just an academic requirement. It was what made the data reusable.</p>
+      <p>Instead of one giant row containing everything about a car, separate tables let the application reuse manufacturers, conditions, categories, storage locations, and photo records consistently.</p>
+    </div>
+
+    <h3>3. Think Beyond the Database File</h3>
+    <p>A later course milestone asked me to think about what would happen if the MySQL database were operated in Azure. I developed a security and backup strategy covering identity and access, role separation, firewall rules, TLS, encryption, auditing, monitoring, backup retention, restore testing, disaster recovery, and operational review.</p>
+
+    <p>That document was a design plan, not evidence that every control was implemented exactly as written. But it pushed the project beyond schema design. I had to think about a database as a service that needs access control, recoverability, monitoring, and maintenance—not simply as a set of tables that return correct queries.</p>
+
+    <div class="metaphor">
+      <b>DATA THAT WORKS IS NOT THE SAME AS DATA YOU CAN TRUST TO SURVIVE.</b>
+      <p>Security, backup, restore testing, and operational visibility became part of the design conversation.</p>
+    </div>
+
+    <h3>4. The Course Model Was Useful—but Not the Final Architecture</h3>
+    <p>As I continued working with the collection, the limits of the original model became obvious. A simple car record was not enough to represent the difference between a casting, a specific release, a physical variation, reference information found elsewhere, and an item I actually own.</p>
+
+    <p>CollectorVision eventually separated those concepts instead of forcing them into one table.</p>
+
+    <div class="network-flow" aria-label="CollectorVision verified production hierarchy">
+      <div class="flow-node"><small>Identity</small><strong>Manufacturer</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Vehicle</small><strong>Casting</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node flow-node-accent"><small>Release context</small><strong>Release</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Physical details</small><strong>Variation</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Ownership</small><strong>Collection item</strong></div>
+    </div>
+
+    <p>This was one of the biggest architectural changes. Release-year information belongs at the release level. Physical color, wheel, base, packaging, and related differences belong at the variation level. Ownership belongs to the specific variation I actually possess.</p>
+
+    <h3>5. Reference Knowledge Became Its Own Layer</h3>
+    <p>The next problem was recognition. To identify a vehicle from a photograph, the system needs far more reference information than I would ever personally own.</p>
+
+    <p>That led to a separate Reference Catalog: a larger knowledge and staging layer that can hold source-derived records, multiple images, source provenance, import history, component details, and links to verified production records when a match has been confirmed.</p>
+
+    <p>The key design rule became:</p>
+
+    <div class="metaphor">
+      <b>PROMOTION IS LINKAGE, NOT MIGRATION.</b>
+      <p>Reference information remains available as provenance and recognition material even after a verified casting, release, or variation has been created.</p>
+    </div>
+
+    <p>That prevents the application from throwing away the evidence that helped establish the record in the first place.</p>
+
+    <h3>6. Images Became Data, Not Decoration</h3>
+    <p>The original class database already treated photos as separate records, but CollectorVision pushed that idea much further. Reference entries can have multiple images with different roles such as card front, card back, loose car, packaging, detail, or general reference.</p>
+
+    <p>That mattered because different recognition problems need different views. A card-front image may be useful for package identification, while a loose-car image is more useful for shape and color matching.</p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/lab/collectorvision-collection.webp" alt="CollectorVision collection interface with photographed die-cast vehicles" loading="lazy" style="display:block;max-width:100%;width:920px;margin:0 auto;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:#a9bbcc;font-size:.82rem;text-align:center">CollectorVision today: the collection interface is backed by structured catalog, release, variation, image, and ownership data rather than a single flat inventory table.</figcaption>
+    </figure>
+
+    <h3>7. Recognition Became a Pipeline, Not a Magic Button</h3>
+    <p>CollectorVision now uses multiple recognition strategies depending on the kind of image being analyzed. Package workflows can use manufacturer-specific OCR and metadata analysis. Loose-car workflows can use SIFT, Bag of Visual Words, color-assisted matching, and fallback searches against reference imagery.</p>
+
+    <p>I deliberately did not make recognition the final authority. Automated matching narrows and ranks possibilities; the user confirms the identity before collection-changing actions are applied.</p>
+
+    <div class="network-flow" aria-label="CollectorVision recognition philosophy">
+      <div class="flow-node"><small>Input</small><strong>Photo</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Analysis</small><strong>OCR / visual features</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Search</small><strong>Reference candidates</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node flow-node-accent"><small>Decision</small><strong>User confirms</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Action</small><strong>Promote / add</strong></div>
+    </div>
+
+    <p><strong>Recognition suggests; the user confirms; CollectorVision then applies the established promotion and collection logic.</strong></p>
+
+    <h3>8. It Became an Operated System</h3>
+    <p>The current application is self-hosted in an Ubuntu LXC and uses FastAPI, Jinja, SQLite, OpenCV, Tesseract OCR, systemd services, and NAS-backed image and report storage.</p>
+
+    <p>The project also has operational concerns that did not exist in the first assignment: service startup, health checks, recognition-index rebuilds, file storage boundaries, review queues, provenance, backups, recovery, and documentation that has to stay synchronized with the live application.</p>
+
+    <div class="content-panel" style="margin:1.5rem 0 2rem">
+      <p><strong>Then:</strong> design a relational database and populate it correctly.</p>
+      <p><strong>Now:</strong> operate a self-hosted system that separates reference knowledge, verified production data, personal ownership, image evidence, and recognition indexes.</p>
+    </div>
+
+    <h3>What Changed Between the First Version and Today</h3>
+    <ul>
+      <li>A general <strong>car</strong> record became a hierarchy of casting, release, variation, and collection ownership.</li>
+      <li>One database became separate layers for reference knowledge and verified production data.</li>
+      <li>Photos evolved into multi-role image evidence used by recognition workflows.</li>
+      <li>Manual cataloging gained OCR, SIFT, BoVW, color-assisted matching, and guided review.</li>
+      <li>Coursework security and backup planning evolved into real operational thinking about storage, services, recovery, and provenance.</li>
+      <li>A class deliverable became a system I still actively change because I actually use it.</li>
+    </ul>
+
+    <h3>What This Project Demonstrates</h3>
+    <div class="tag-row">
+      <span class="tag">Python</span>
+      <span class="tag">FastAPI</span>
+      <span class="tag">SQLite</span>
+      <span class="tag">Relational design</span>
+      <span class="tag">OCR</span>
+      <span class="tag">OpenCV</span>
+      <span class="tag">SIFT</span>
+      <span class="tag">BoVW</span>
+      <span class="tag">Image workflows</span>
+      <span class="tag">Linux</span>
+      <span class="tag">Self-hosting</span>
+      <span class="tag">Provenance</span>
+      <span class="tag">Human-in-the-loop review</span>
+      <span class="tag">System evolution</span>
+    </div>
+
+    <h3>What I Took Away</h3>
+    <p>The biggest lesson is that the first data model does not have to be the final one.</p>
+
+    <p>The original coursework was valuable because it forced me to define relationships and make the collection concrete. But the real learning happened when I kept using the idea and discovered where the model was too simple, where the workflow was too manual, and where recognition needed better evidence and review.</p>
+
+    <p><strong>CollectorVision became interesting when the assignment stopped telling me what to build.</strong></p>
+
+    <p>That is why I still consider it one of my most important projects. It connects database design, systems thinking, Python development, computer vision, Linux administration, operational documentation, and a real problem I actually care about solving.</p>
+
+    <div class="action-row" style="margin-top:2rem">
+      <a class="btn btn-primary" href="https://github.com/Robert-Pelot/CollectorVision" target="_blank" rel="noopener noreferrer">View GitHub repository</a>
+      <a class="btn btn-ghost" href="/projects.html#collectorvision">Back to CollectorVision</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
