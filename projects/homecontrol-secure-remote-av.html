@@ -67,7 +67,7 @@
     <p>A separate internal path connects the same control service to my self-hosted Homepage dashboard. This lets me use the same ON, OFF, VIEW, and AUDIT actions from the LAN without weakening the remote boundary.</p>
 
     <figure style="margin:2rem 0 2.4rem">
-      <img src="/assets/images/projects/homecontrol-dashboard.png" alt="HomeControl dashboard card showing Remote AV, Capture, Stream Server, Audit, and ON OFF VIEW controls" loading="lazy" style="display:block;max-width:100%;width:680px;margin:0 auto;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <img src="/assets/images/projects/homecontrol-dashboard.webp" alt="HomeControl Homepage card showing Remote AV, Capture, Stream Server, Audit, and ON OFF VIEW AUDIT controls" loading="lazy" style="display:block;max-width:100%;width:680px;margin:0 auto;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
       <figcaption style="margin-top:.7rem;color:#a9bbcc;font-size:.82rem;text-align:center">The actual Homepage control card. The status row shows capture, streaming, and audit health; the action row provides deliberate controls.</figcaption>
     </figure>
 
@@ -89,6 +89,11 @@
     <p>Instead, an approved mobile device reaches a tailnet-only HTTPS endpoint. Tailscale Serve forwards that connection to a gateway bound only to localhost on the Windows machine. The remote policy is intentionally narrow: the approved endpoint is allowed to reach only the HTTPS entry point required by HomeControl.</p>
 
     <p><strong>The important design idea is that the remote gateway is not simply another web server listening on every interface.</strong> It is reachable because a trusted private access layer deliberately hands traffic to it.</p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/homecontrol-mobile.webp" alt="Sanitized mobile HomeControl portal showing Remote AV status and ON OFF VIEW LISTEN controls" loading="lazy" style="display:block;max-width:100%;width:520px;margin:0 auto;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:#a9bbcc;font-size:.82rem;text-align:center">The remote mobile portal over the private tailnet. Browser chrome and the private tailnet hostname were removed from the public screenshot.</figcaption>
+    </figure>
 
     <h3>Layer the Local Pieces Too</h3>
     <p>The local environment uses internal DNS and a reverse proxy so the dashboard can refer to readable service names rather than embedding raw addresses everywhere. Windows Firewall restricts the control API to the specific internal systems that need it.</p>
@@ -113,6 +118,11 @@
       <p><strong>Attempted / failed access</strong></p>
       <p>Device classification • date • local time • result</p>
     </div>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/homecontrol-audit.webp" alt="Sanitized HomeControl audit history showing approved phone connections and an attempted failed access section" loading="lazy" style="display:block;max-width:100%;width:820px;margin:0 auto;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:#a9bbcc;font-size:.82rem;text-align:center">The simplified operational audit view. Raw details remain in SQLite while the everyday page shows only device classification, date, local time, and result.</figcaption>
+    </figure>
 
     <p>The detailed database remains underneath the clean interface. That pattern became one of my favorite parts of the project: preserve the evidence, but design the operational view around the decisions a person actually needs to make.</p>
 
