@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>From Disk Image to Defensible Findings | Life in Your 50s</title>
+  <meta name="description" content="A sanitized digital-forensics case study about forensic imaging, integrity verification, artifact correlation, metadata, encrypted evidence, and defensible reporting.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/projects.html">Projects</a><span>/</span><span>Digital forensics case study</span></div>
+  <div class="article-label">Digital Forensics • Evidence Integrity • Artifact Analysis • Reporting</div>
+  <h1>From Disk Image to Defensible Findings</h1>
+  <div class="article-meta">Academic forensic exercise &nbsp;•&nbsp; Sanitized portfolio case study</div>
+
+  <div class="article-visual">
+    <div class="metaphor">
+      <b>IMAGE → VERIFY → DISCOVER → DOCUMENT → CORRELATE → REPORT</b>
+      <p>The useful result was not simply finding files. It was building a traceable path from the forensic image to a finding another examiner could evaluate.</p>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <p><strong>At first glance, digital forensics can look like a search problem: find the interesting file and explain what it means.</strong></p>
+
+    <p>This project changed that view for me. I worked through a 39-page forensic evidence packet built from an E01 image of removable media. The exercise ultimately documented 55 numbered evidence items across seven investigative sections, with artifacts drawn from documents, email, attachments, browser data, encrypted material, archives, and other locations in the image.</p>
+
+    <p>The more important lesson was that finding an artifact is only the beginning. A defensible result needs integrity, source context, metadata, correlation, and a report that clearly separates what the evidence shows from what the examiner thinks it might mean.</p>
+
+    <div class="public-note"><strong>Public-safe version:</strong> names, passwords, exact source paths, cryptographic hash values, and case-specific allegations are intentionally omitted. The investigative method and technical lessons are preserved.</div>
+
+    <h3>Case at a Glance</h3>
+    <div class="content-panel" style="margin:1.5rem 0 2rem">
+      <p><strong>Source examined:</strong> forensic image of a 122 MB USB device</p>
+      <p><strong>Acquisition:</strong> E01 image created with FTK Imager</p>
+      <p><strong>Integrity:</strong> MD5 and SHA-1 values recorded and successfully verified</p>
+      <p><strong>Scope:</strong> 39-page evidence packet, 55 numbered evidence items, seven investigative sections</p>
+    </div>
+
+    <h3>Preserve Before You Interpret</h3>
+    <p>The examination began with a forensic image rather than live media. The source information, image format, acquisition details, and cryptographic verification were recorded before analysis.</p>
+
+    <p>The packet also documented successful verification more than once. That reinforced a basic rule that became much more concrete during the exercise: <strong>before asking what the evidence means, first establish that you are still examining the same evidence.</strong></p>
+
+    <p>If the source cannot be trusted, every conclusion built on top of it becomes harder to defend.</p>
+
+    <h3>The Evidence Landscape Was Broader Than One Folder</h3>
+    <p>The evidence did not live in one convenient directory or one file type. Relevant material appeared across ordinary user documents, images, spreadsheets, email messages, attachments, Outlook data, text files, HTML and browser-cache artifacts, archive contents, encrypted files, and presentation material.</p>
+
+    <div class="content-panel" style="margin:1.5rem 0 2rem">
+      <p><strong>Files & documents</strong><br>Images, Word documents, text files, spreadsheets, and presentation material</p>
+      <p><strong>Messaging</strong><br>Email messages, attachments, and mail-store artifacts</p>
+      <p><strong>Browser artifacts</strong><br>Temporary Internet files and cached HTML content</p>
+      <p><strong>Protected content</strong><br>Encrypted files and archived material</p>
+      <p><strong>Metadata</strong><br>Hashes, source paths, and created / modified / accessed timestamps</p>
+    </div>
+
+    <p>That breadth changed the way I approached the image. A forensic question rarely stays inside one application. The useful evidence can be scattered across user folders, email stores, cache locations, temporary files, and protected containers.</p>
+
+    <h3>An Artifact Needs More Than a File Name</h3>
+    <p>Each evidence item followed a consistent structure. The packet recorded the file name, source path, encryption status, cryptographic hashes, timestamps, and a short description of why the artifact mattered.</p>
+
+    <p>That structure is what turns an interesting file into something reproducible. Another examiner should be able to understand where an artifact came from, distinguish it from similar material, and see which metadata supported the observation.</p>
+
+    <figure style="margin:2rem 0 2.4rem">
+      <img src="/assets/images/projects/forensics-evidence-record.webp" alt="Sanitized reconstruction of a digital forensic evidence record with case-specific values removed" loading="lazy" style="display:block;max-width:100%;width:820px;margin:0 auto;border-radius:18px;border:1px solid rgba(151,187,218,.22);box-shadow:0 22px 50px rgba(0,0,0,.28)">
+      <figcaption style="margin-top:.7rem;color:#a9bbcc;font-size:.82rem;text-align:center">Public-safe reconstruction of the evidence-record format. Identifying and case-specific values are intentionally omitted.</figcaption>
+    </figure>
+
+    <h3>Correlation Made Individual Artifacts More Useful</h3>
+    <p>One of the clearest lessons came from seeing related evidence appear in different places. In one sanitized example, an email artifact was associated with an attached protected document, while a related encrypted spreadsheet existed elsewhere in the image.</p>
+
+    <p>Each artifact could be documented independently. Together, they provided stronger context than any one item could provide alone.</p>
+
+    <div class="network-flow" aria-label="Sanitized forensic correlation example">
+      <div class="flow-node"><small>Communication</small><strong>Email artifact</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node flow-node-accent"><small>Attachment</small><strong>Protected document</strong></div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-node"><small>Elsewhere in image</small><strong>Related encrypted data</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Result</small><strong>Correlated context</strong></div>
+    </div>
+
+    <p>This is the difference between cataloging and analysis. Cataloging says what is present. Correlation asks which artifacts appear to belong to the same activity, topic, or sequence—and then records that relationship without overstating what it proves.</p>
+
+    <h3>Metadata Is Evidence, but It Has Limits</h3>
+    <p>Created, modified, and accessed timestamps were recorded throughout the packet. When those values are present and plausible, they can help establish sequence and chronology.</p>
+
+    <p>But several entries contained unusable zero-value timestamps rather than meaningful dates. That became a good reminder that metadata should be examined, not worshiped. Missing or invalid timestamps are not permission to invent a timeline. The limitation itself belongs in the analysis.</p>
+
+    <div class="content-panel" style="margin:1.5rem 0 2rem">
+      <p><strong>What the evidence can support</strong></p>
+      <ul>
+        <li>A file existed in a documented location.</li>
+        <li>A recorded hash identifies the examined artifact.</li>
+        <li>Usable metadata can support chronology.</li>
+        <li>Related artifacts can strengthen context.</li>
+      </ul>
+      <p><strong>What it cannot prove by itself</strong></p>
+      <ul>
+        <li>Who necessarily created the file.</li>
+        <li>Why it was created or stored.</li>
+        <li>Whether someone acted on its contents.</li>
+        <li>Facts that simply are not present in the evidence.</li>
+      </ul>
+    </div>
+
+    <h3>Encryption Changes the Workflow</h3>
+    <p>Several artifacts in the packet were marked as encrypted, and recovered access information was documented as part of the examination.</p>
+
+    <p>That changes the workflow because the presence of a protected file is not the same thing as access to its contents. The protection state has to be recorded, the access method has to remain tied to the evidence record, and the examiner still has to document the artifact after it becomes accessible.</p>
+
+    <p>The public version intentionally leaves the passwords themselves out. The important point is the process, not the secret.</p>
+
+    <h3>Observation Before Interpretation</h3>
+    <p>The dataset contained material that could easily tempt an examiner into dramatic conclusions. The more professional approach is to separate observation from interpretation.</p>
+
+    <p>I can state that an artifact was present, where it was located, what hash identified it, what metadata was recorded, and which other artifacts appeared related. The conclusion should go only as far as those facts allow.</p>
+
+    <div class="metaphor"><b>OBSERVATION → CORROBORATION → SUPPORTABLE FINDING</b><p>Not every association proves authorship, intent, or action. A forensic report has to preserve that boundary.</p></div>
+
+    <h3>Reporting Is Part of the Examination</h3>
+    <p>The final packet was organized into numbered evidence items so a reader could move from a finding to the supporting artifact, then back to the source location, hashes, timestamps, encryption state, and description.</p>
+
+    <p>That is much stronger than a folder full of screenshots. Screenshots can illustrate what an examiner saw; an evidence record explains where it came from and why the reader should trust that it is the same artifact being discussed.</p>
+
+    <h3>A Defensible Finding Has a Chain of Support</h3>
+    <div class="network-flow" aria-label="Chain of support for a forensic finding">
+      <div class="flow-node"><small>Source</small><strong>Known image</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Identify</small><strong>Artifact record</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Verify</small><strong>Hash + metadata</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node flow-node-accent"><small>Context</small><strong>Related evidence</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Limit</small><strong>No unsupported leap</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><small>Report</small><strong>Traceable finding</strong></div>
+    </div>
+
+    <h3>Techniques and Tools Demonstrated</h3>
+    <p>The exercise combined evidence integrity, file-system examination, metadata review, email and attachment analysis, encrypted-artifact handling, cross-artifact correlation, and structured reporting.</p>
+
+    <div class="tag-row">
+      <span class="tag">FTK Imager</span>
+      <span class="tag">E01 forensic images</span>
+      <span class="tag">MD5 / SHA verification</span>
+      <span class="tag">File-system artifacts</span>
+      <span class="tag">Metadata</span>
+      <span class="tag">Email & attachments</span>
+      <span class="tag">Encrypted artifacts</span>
+      <span class="tag">Evidence correlation</span>
+      <span class="tag">Forensic reporting</span>
+    </div>
+
+    <h3>What I Took Away</h3>
+    <p>This project made forensic work feel less like searching and more like controlled documentation.</p>
+
+    <p>The question I kept coming back to was simple: <em>Can another person follow the path from my conclusion back to the artifact that supports it?</em></p>
+
+    <p>That is the part I would carry into a real investigation: preserve the source, verify integrity, record what was found, correlate related evidence, acknowledge missing or unreliable metadata, and make the final report strong enough to stand without relying on the examiner's memory.</p>
+
+    <p><strong>Digital forensics is not about telling the most dramatic story. It is about building the most supportable one.</strong></p>
+
+    <p style="margin-top:2rem"><em>This case study is based on an academic forensic evidence exercise. Public presentation intentionally omits identifying details and sensitive source material.</em></p>
+
+    <div class="article-back"><a href="/projects.html">← Back to projects</a></div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
