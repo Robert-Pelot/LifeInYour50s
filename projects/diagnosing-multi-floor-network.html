@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>Diagnosing a Multi-Floor Network | Life in Your 50s</title>
+  <meta name="description" content="A Cisco Packet Tracer troubleshooting case study covering default gateways, routed paths, OSPF, ACLs, and SSH administration.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/projects.html">Projects</a><span>/</span><span>Case Study</span></div>
+  <div class="article-label">Networking • Cisco • Troubleshooting</div>
+  <h1>Diagnosing a Multi-Floor Network</h1>
+  <div class="article-meta">By Robert Pelot &nbsp;•&nbsp; <time datetime="2026-09-23">September 23, 2026</time></div>
+
+  <div class="article-visual">
+    <div class="metaphor">
+      <b>“NO CONNECTION” IS A SYMPTOM, NOT A DIAGNOSIS.</b>
+      <p>The failure might be the host, its gateway, a disabled device, the route table, or a policy rule. The useful skill is separating those possibilities.</p>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <p><strong>A host that cannot reach a server does not automatically have a routing problem.</strong></p>
+
+    <p>A Cisco Packet Tracer final gave me a compact exercise in working through that idea. The topology represented a multi-floor network with routed subnets, switching, dynamic routing, an internet-facing path, access-control rules, and remote administration.</p>
+
+    <p>The point of the public case study is not the worksheet itself. What matters is the troubleshooting process: identify the failure domain, gather evidence, and avoid changing configuration until the evidence points somewhere.</p>
+
+    <h3>Start with the obvious faults</h3>
+
+    <p>The first two problems were simple but important. FLOOR2 was not turned on, and PC36 did not have a default gateway configured.</p>
+
+    <p>Those are different failures, but they can produce the same user-facing complaint: traffic does not get where it is supposed to go. A routing protocol cannot compensate for an unavailable network device, and a correctly routed network cannot help a host that does not know where to send off-subnet traffic.</p>
+
+    <div class="metaphor">
+      <b>VERIFY THE SIMPLE LAYERS FIRST.</b>
+      <p>Device state, host addressing, gateway configuration, routing, and policy are separate places where the same connectivity symptom can originate.</p>
+    </div>
+
+    <h3>Follow the packet path</h3>
+
+    <p>The next question was how traffic from a workstation would move toward the web server. Working through that path meant distinguishing switching from routing instead of counting every device as a hop.</p>
+
+    <p>It also raised a more useful question than “Can I ping it?”: <em>what should happen at each layer between the source and destination?</em></p>
+
+    <h3>Read the routing table before changing the network</h3>
+
+    <p>The FLOOR3 routing table showed directly connected networks, routes learned through OSPF, and a gateway of last resort. That is useful evidence because it shows what the router actually knows rather than what I assume it should know.</p>
+
+    <figure style="margin: 1.5rem 0;">
+      <img src="/assets/images/projects/network-floor3-routing-table.webp" alt="Cisco Packet Tracer FLOOR3 show ip route output with connected networks, OSPF routes, and a default route." style="width:100%; height:auto; border-radius:18px; border:1px solid rgba(255,255,255,.12);">
+      <figcaption style="margin-top:.65rem; font-size:.95rem; color:var(--muted);">Figure 1. FLOOR3 routing evidence: connected networks, OSPF-learned routes, and the gateway of last resort.</figcaption>
+    </figure>
+
+    <p>The exercise also identified OSPF as the dynamic routing protocol and used a router ID of <strong>33.33.33.33</strong> for FLOOR3. Those details help confirm that the routing plane is not just present but understandable.</p>
+
+    <h3>A route can exist and traffic can still be blocked</h3>
+
+    <p>PC23 and PC24 could not reach the web server because an extended access-control list was intentionally blocking IP traffic from their subnet to the target host.</p>
+
+    <p>That is a very different diagnosis from “the router does not know where the server is.” The network can have a valid path and still be configured not to forward the traffic.</p>
+
+    <figure style="margin: 1.5rem auto; max-width:850px;">
+      <img src="/assets/images/projects/network-printacl.webp" alt="Cisco extended access list named PRINTACL denying traffic from the affected subnet to a host and then permitting other IP traffic." style="width:100%; height:auto; border-radius:18px; border:1px solid rgba(255,255,255,.12);">
+      <figcaption style="margin-top:.65rem; font-size:.95rem; color:var(--muted);">Figure 2. PRINTACL shows why a valid route does not automatically mean the traffic is permitted.</figcaption>
+    </figure>
+
+    <p>That distinction carries directly into real infrastructure work: <strong>reachability and authorization are not the same thing.</strong> Troubleshooting has to verify both the path and the policy.</p>
+
+    <h3>Verify the management plane too</h3>
+
+    <p>The final checks included switch management addressing, default-gateway information, and whether SSH was configured for remote administration. The exercise confirmed SSH version 2 was enabled.</p>
+
+    <figure style="margin: 1.5rem auto; max-width:850px;">
+      <img src="/assets/images/projects/network-ssh-v2.webp" alt="Cisco configuration line showing ip ssh version 2." style="width:100%; height:auto; border-radius:18px; border:1px solid rgba(255,255,255,.12);">
+      <figcaption style="margin-top:.65rem; font-size:.95rem; color:var(--muted);">Figure 3. SSH version 2 configured for remote administration. The public image intentionally omits the adjacent credential hash from the lab configuration.</figcaption>
+    </figure>
+
+    <p>Those checks are part of understanding the system, not an afterthought. A network has to be reachable, routable, permitted, and manageable.</p>
+
+    <h3>What this demonstrates</h3>
+
+    <ul>
+      <li>Basic Cisco IOS inspection and interpretation</li>
+      <li>Understanding of default gateways and routed versus switched paths</li>
+      <li>Recognition of OSPF-learned routes and router-ID information</li>
+      <li>ACL-based traffic filtering and policy troubleshooting</li>
+      <li>Switch management addressing and SSH administration</li>
+      <li>A layered troubleshooting process instead of random configuration changes</li>
+    </ul>
+
+    <h3>What I took away</h3>
+
+    <p>The useful lesson was not a particular Cisco command. It was the order of operations: check whether the device is available, check the host configuration, inspect the route, inspect policy, and verify the management plane.</p>
+
+    <p>Each layer can create the same visible symptom. Each requires a different fix.</p>
+
+    <p><strong><em>The fastest way to troubleshoot a network is to stop treating every connectivity failure as the same problem.</em></strong></p>
+
+    <p><em>This case study is adapted from an IST 204 Cisco Packet Tracer final. The public version focuses on the troubleshooting process and the networking concepts demonstrated by the exercise rather than reproducing the assignment as a question-and-answer worksheet.</em></p>
+
+    <div class="article-back"><a href="/projects.html">← Back to Projects</a></div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
