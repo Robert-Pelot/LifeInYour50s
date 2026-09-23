@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121f">
+  <title>When the Weighting Changes the Answer | Life in Your 50s</title>
+  <meta name="description" content="A Tableau case study showing how social, environmental, and health indicators were normalized, weighted, mapped, and turned into an interactive community-vulnerability model.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="Life in Your 50s home">
+    <span class="brand-mark" aria-hidden="true">50+</span>
+    <span><strong>Life in Your 50s</strong><small>Built, not finished.</small></span>
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Menu</span></button>
+  <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    <a href="/index.html" data-nav="home">Home</a>
+    <a href="/homelab.html" data-nav="homelab">Homelab</a>
+    <a href="/projects.html" data-nav="projects">Projects</a>
+    <a href="/journey.html" data-nav="journey">My Journey</a>
+    <a href="/writing.html" data-nav="writing">Writing</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="article-wrap">
+  <div class="breadcrumb"><a href="/projects.html">Projects</a><span>/</span><span>Case Study</span></div>
+  <div class="article-label">Data analytics • Tableau • interactive modeling</div>
+  <h1>When the Weighting Changes the Answer</h1>
+  <div class="article-meta">By Robert Pelot &nbsp;•&nbsp; <time datetime="2026-09-22">September 22, 2026</time></div>
+
+  <div class="article-visual">
+    <div class="metaphor">
+      <b>THE MOST IMPORTANT PART OF A MODEL IS OFTEN THE PART PEOPLE DO NOT SEE.</b>
+      <p>In this project, the hidden assumptions were the weights used to combine social, environmental, and health vulnerability into one composite result.</p>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <p><strong>This started as a Tableau final project, but it became a useful case study in data modeling.</strong></p>
+
+    <p>The project asked a practical question: if we want to understand community vulnerability in Upstate South Carolina, how do we combine different kinds of risk without pretending they are all measured the same way?</p>
+
+    <p>That question matters because poverty, environmental burden, chronic disease, infrastructure barriers, and related indicators may all contribute to vulnerability, but they are not naturally comparable. A useful model has to make unlike measures comparable enough to analyze together, while still making it clear that the final result depends on design decisions.</p>
+
+    <h3>1) Comparing vulnerability dimensions</h3>
+
+    <p>The first dashboard separates social vulnerability, environmental burden, and health outcomes. This matters because it prevents a composite score from hiding the fact that different areas may be driven by different underlying conditions.</p>
+
+    <figure style="margin: 1.5rem 0;">
+      <img src="/assets/images/projects/tableau-vulnerability-dimensions.webp" alt="Tableau dashboard comparing social vulnerability, environmental burden, and health outcomes across Upstate South Carolina." style="width:100%; height:auto; border-radius: 18px; border: 1px solid rgba(255,255,255,.12);">
+      <figcaption style="margin-top:.65rem; font-size:.95rem; color:var(--muted);">Figure 1. Separate maps make it easier to see where the three dimensions converge and where they diverge.</figcaption>
+    </figure>
+
+    <h3>2) Building a fixed composite model</h3>
+
+    <p>The second dashboard combines the three dimensions into a fixed composite model using a baseline weighting of <strong>40% social / 30% environmental / 30% health</strong>. It also shows the dominant risk driver instead of presenting only one total score.</p>
+
+    <figure style="margin: 1.5rem 0;">
+      <img src="/assets/images/projects/tableau-vulnerability-composite.webp" alt="Composite vulnerability dashboard with an overall index map and a dominant risk driver map." style="width:100%; height:auto; border-radius: 18px; border: 1px solid rgba(255,255,255,.12);">
+      <figcaption style="margin-top:.65rem; font-size:.95rem; color:var(--muted);">Figure 2. A fixed composite model is useful, but it still reflects deliberate weighting choices.</figcaption>
+    </figure>
+
+    <h3>3) Showing that the assumptions matter</h3>
+
+    <p>The strongest part of the project is the interactive explorer. The viewer can change the weights assigned to social, environmental, and health factors, and the system updates the map and dominant-driver results accordingly.</p>
+
+    <p>That turns the dashboard into something more analytical than a static report. It makes the assumptions visible and shows that changing the weighting can change the answer.</p>
+
+    <figure style="margin: 1.5rem 0;">
+      <img src="/assets/images/projects/tableau-vulnerability-weighted.webp" alt="Interactive vulnerability explorer with adjustable weights and updated maps." style="width:100%; height:auto; border-radius: 18px; border: 1px solid rgba(255,255,255,.12);">
+      <figcaption style="margin-top:.65rem; font-size:.95rem; color:var(--muted);">Figure 3. The scenario explorer makes the weighting assumptions visible and testable.</figcaption>
+    </figure>
+
+    <div class="metaphor">
+      <b>A COMPOSITE SCORE IS NEVER JUST DATA. IT IS DATA PLUS A DECISION RULE.</b>
+      <p>Exposing the decision rule makes the dashboard more analytical, more transparent, and more honest.</p>
+    </div>
+
+    <h3>What this demonstrates technically</h3>
+    <ul>
+      <li>Data integration across multiple sources tied to census-tract geography</li>
+      <li>Geospatial mapping in Tableau</li>
+      <li>Normalization and tract-level calculations</li>
+      <li>Composite-score construction</li>
+      <li>Dominant-driver logic and category comparison</li>
+      <li>Scenario analysis through user-controlled parameters</li>
+      <li>Storytelling through a structured Tableau story</li>
+    </ul>
+
+    <h3>Why it belongs on the portfolio site</h3>
+
+    <p>This is stronger than a generic Tableau homework item because it demonstrates more than software familiarity. It shows analytical reasoning, model design, data transformation, visualization, and the ability to communicate uncertainty instead of hiding it.</p>
+
+    <p>It also makes a larger point that applies well beyond Tableau: when a model combines unlike risks, the result is shaped not only by the data but also by the rule used to combine the data.</p>
+
+    <div class="action-row" style="margin-top: 1.5rem;">
+      <a class="btn btn-primary" href="https://public.tableau.com/app/profile/robert.pelot/viz/HW12-Final/Story1" target="_blank" rel="noopener noreferrer">Explore the live Tableau visualization</a>
+      <a class="btn btn-ghost" href="/projects.html">Back to Projects</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="/index.html">Life in Your 50s</a>
+    <p>A working record of reinvention, technology, and everything I’m still learning.</p>
+  </div>
+  <div class="footer-links">
+    <a href="/homelab.html">Homelab</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:pelotrobert3@gmail.com">Email</a>
+  </div>
+  <p class="copyright">© <span data-year></span> Robert Pelot</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
