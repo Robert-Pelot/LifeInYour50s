@@ -1,52 +1,97 @@
-# Life in Your 50s — Showcase v2
+# Life in Your 50s
 
-This version turns the site into a broader **technical showcase**, not just a prettier personal website.
+[![Static Site](https://img.shields.io/badge/site-static-0B2239.svg)](https://mystorageaccountusasa.z13.web.core.windows.net/)
+[![Azure Storage](https://img.shields.io/badge/hosted%20on-Azure%20Storage-0078D4.svg)](https://azure.microsoft.com/)
 
-## What changed in v2
+A personal technical portfolio and homelab showcase built as a static website and hosted on Azure Storage. The site combines project case studies, infrastructure documentation, technical writing, career-transition context, and public-safe screenshots from a working homelab.
 
-- Integrated real photographs of the lab instead of relying only on diagrams and text.
-- Reframed the Homelab page as a **complete technical environment**:
-  - primary Ryzen workstation
-  - Proxmox virtualization host
-  - Dell G15 laptop
-  - AZW MINI S test PC
-  - Raspberry Pi 4
-  - Linksys EA9500 personal router
-  - ISP fiber ONT
-  - 4-device dual-monitor 4K HDMI/USB3 KVM
-  - IoT / MQTT experiments and planned Cisco lab expansion
-- Corrected the Proxmox motherboard networking to **4 × 2.5 GbE Intel I226**.
-- Added public-safe screenshots for Proxmox, TrueNAS, Grafana, Pi-hole, CollectorVision, the CSCI 434 digital-forensics lab, and the local LLM.
-- Cropped or omitted screenshots that would expose internal addressing, usernames, or unnecessary private-network details.
-- Avoided public screenshots of the download/indexing stack; the site describes media infrastructure only at a high level.
-- Added real project imagery to the Projects page.
-- Kept the unfinished A.A.S. Programming and Network Systems Management degrees off the public education section.
-- Kept the site completely static. **PHP is still not needed.**
+**Live site:** https://mystorageaccountusasa.z13.web.core.windows.net/  
+**Projects:** https://mystorageaccountusasa.z13.web.core.windows.net/projects.html  
+**Homelab:** https://mystorageaccountusasa.z13.web.core.windows.net/homelab.html
 
-## Local preview
+## 30-second overview
 
-Double-click:
+| | |
+|---|---|
+| **Purpose** | Technical portfolio, project evidence, homelab documentation, and writing |
+| **Stack** | HTML, CSS, JavaScript |
+| **Hosting** | Azure Storage static website |
+| **Content** | Projects, case studies, homelab systems, technical writing, career journey |
+| **Design goal** | Let a reviewer understand the work quickly, then choose how deep to go |
+| **Security goal** | Show authentic technical evidence without publishing unnecessary private-network details |
 
-`PREVIEW-WEBSITE.bat`
+## Site architecture
 
-or run:
-
-```powershell
-python -m http.server 8000
+```mermaid
+flowchart LR
+    Visitor[Browser] --> Azure[Azure Storage static website]
+    Azure --> HTML[HTML pages]
+    Azure --> CSS[Shared CSS]
+    Azure --> JS[Shared JavaScript]
+    Azure --> Media[Sanitized images / screenshots]
+    HTML --> Projects[Project case studies]
+    HTML --> Homelab[Homelab showcase]
+    HTML --> Writing[Technical writing]
+    GitHub[GitHub source] --> Deploy[Static deployment]
+    Deploy --> Azure
 ```
 
-Then open:
+The site remains intentionally static: there is no database, server-side application, authentication layer, or API required for the public portfolio.
 
-`http://localhost:8000/`
+## What this demonstrates
 
-## Azure Static Website deployment
+- Building and maintaining a multi-page static website
+- Organizing technical work for non-technical and technical reviewers
+- Translating coursework and personal projects into concise portfolio case studies
+- Presenting infrastructure evidence through sanitized screenshots and photographs
+- Responsive HTML/CSS layout and reusable visual patterns
+- Static-site deployment to Azure Storage
+- Security-conscious decisions about what **not** to publish
+- Cross-linking project repositories with deeper portfolio explanations
 
-Upload the **contents of this folder** to the Azure Storage `$web` container.
+## Representative homelab evidence
 
-Recommended settings:
+The site uses real, public-safe images rather than generic stock artwork wherever practical.
 
-- Index document: `index.html`
-- Error document: `404.html`
+![Homelab room](assets/images/lab/lab-room.jpg)
+
+Additional public-safe screenshots on the site include Proxmox, TrueNAS, Grafana, Pi-hole, CollectorVision, the digital-forensics lab, and the local LLM environment.
+
+## Site sections
+
+### Projects
+
+The Projects page acts as a visual directory. Each entry gives enough context to understand what was built and links to a deeper case study, live project, or GitHub repository when one exists.
+
+### Homelab
+
+The Homelab page documents a working environment built around Proxmox virtualization, storage, monitoring, DNS filtering, local AI tooling, test systems, and supporting network infrastructure.
+
+### Writing
+
+The Writing section demonstrates technical communication, judgment, reflection, ethics, safety, systems thinking, and lessons drawn from coursework and prior industrial experience.
+
+### My Journey
+
+The Journey section explains the career transition behind the portfolio and connects earlier industrial/process-control experience with current cybersecurity and information-systems work.
+
+## Design decisions and tradeoffs
+
+### Static by design
+
+The public portfolio does not need server-side execution. A static architecture keeps deployment simple, reduces attack surface, avoids unnecessary hosting complexity, and works well with Azure Storage.
+
+### Evidence over decoration
+
+Where screenshots or photos exist, the site favors genuine project and lab evidence. The goal is not to make every card visually identical; it is to make the work understandable and credible.
+
+### Depth is optional
+
+Directory pages stay relatively concise while stronger projects link to full case studies. A reviewer can scan quickly or continue into architecture, screenshots, troubleshooting decisions, and lessons learned.
+
+### Public-safe documentation
+
+Screenshots and descriptions are intentionally sanitized. The portfolio shows enough implementation detail to demonstrate the work without exposing unnecessary operational information.
 
 ## Public-safety decisions
 
@@ -57,16 +102,62 @@ The showcase intentionally avoids publishing:
 - MAC addresses
 - VPN endpoints
 - detailed reverse-proxy destinations
-- screenshots that could unnecessarily associate the public portfolio with download/indexing tools
+- screenshots that expose unnecessary private-network details
+- unnecessary public detail about download/indexing infrastructure
 
-## Still worth adding later
+Some screenshots are cropped or omitted specifically for this reason.
 
-- Exact ISP ONT model if desired.
-- Exact KVM manufacturer/model if available.
-- Cisco switch/router model numbers once they are actually integrated into the lab.
-- A custom domain and sitemap after the final domain is chosen.
-- An Astro source version once the visual/content direction is finalized. Astro can generate the same static output while making future editing much easier.
+## Local preview
 
-## Architecture direction
+Double-click:
 
-The site remains intentionally static because the public showcase does not require server-side execution. The likely next technical step is **Astro**, not PHP: reusable components, Markdown content, data-driven lab inventory, and a static build that can still be hosted on Azure Storage.
+```text
+PREVIEW-WEBSITE.bat
+```
+
+or run:
+
+```powershell
+python -m http.server 8000
+```
+
+Then open:
+
+```text
+http://localhost:8000/
+```
+
+## Azure Static Website deployment
+
+The contents of the repository are deployed to the Azure Storage `$web` container.
+
+Recommended static-website settings:
+
+- Index document: `index.html`
+- Error document: `404.html`
+
+The repository itself remains the source-controlled copy; Azure Storage serves the deployed static files.
+
+## Project structure
+
+```text
+articles/             Technical writing
+projects/             Long-form project case studies
+assets/css/           Shared styling
+assets/js/            Shared browser behavior
+assets/images/lab/    Public-safe homelab evidence
+assets/images/projects/ Project screenshots and visuals
+index.html            Home page
+homelab.html          Homelab showcase
+projects.html         Visual project directory
+journey.html          Career-transition story
+writing.html          Writing directory
+privacy.html          Privacy information
+404.html              Static error page
+```
+
+## Current direction
+
+The site is intentionally kept simple and maintainable. Future improvements that could add value include a custom domain, sitemap, or a static-site generator such as Astro if reusable components and data-driven content eventually justify a build step.
+
+The important constraint is unchanged: new technology should make the portfolio easier to maintain or understand, not add complexity merely for its own sake.
